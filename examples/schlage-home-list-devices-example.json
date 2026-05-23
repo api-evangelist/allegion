@@ -1,0 +1,38 @@
+{
+  "_meta": {
+    "api": "Schlage Home API",
+    "operation": "listDevices",
+    "request": {
+      "method": "GET",
+      "url": "https://api.allegion.com/schlage-home/devices",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "Accept": "application/json"
+      }
+    }
+  },
+  "devices": [
+    {
+      "deviceId": "d-9f2b7c10-3e44-4cba-a3a7-1b9c0c4e7d11",
+      "name": "Front Door",
+      "model": "BE499WB",
+      "firmwareVersion": "5.21.0",
+      "batteryLevel": 87,
+      "wifiSignalStrength": -52,
+      "connectivityState": "Online",
+      "lockState": "Locked",
+      "timeZone": "America/Los_Angeles"
+    },
+    {
+      "deviceId": "d-2c1d8f4a-9b22-4f6e-9b3a-7e09d4a2b1f6",
+      "name": "Back Door",
+      "model": "BE489WB",
+      "firmwareVersion": "5.18.4",
+      "batteryLevel": 64,
+      "wifiSignalStrength": -68,
+      "connectivityState": "Online",
+      "lockState": "Unlocked",
+      "timeZone": "America/Los_Angeles"
+    }
+  ]
+}

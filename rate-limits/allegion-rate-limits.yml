@@ -1,0 +1,81 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Allegion
+providerId: allegion
+created: '2026-05-23'
+modified: '2026-05-23'
+reconciled: false
+tags:
+  - Rate Limiting
+  - Webhooks
+  - Async Commands
+  - Smart Lock
+  - Access Control
+description: |
+  Allegion does not publish per-second or per-hour rate limits for the Schlage Home
+  API or for the ENGAGE Cloud Credentialing API. The public best-practices
+  documentation instead describes operational ceilings that act as the de-facto
+  policy: an asynchronous 202 ACCEPTED command pattern, mandatory HTTPS webhook
+  callbacks, a 30-second OPTIONS validation window, and hardware-side ceilings
+  (e.g. ENGAGE supports up to 100 locks or 500 for Schlage Control, and 5,000
+  users per site).
+sources:
+  - https://developer.allegion.com/en/products/schlage-home/schlage-home-api.html
+  - https://developer.allegion.com/en/products/schlage-home/best-practices.html
+  - https://developer.allegion.com/en/products/schlage-mobile-credentials/credentialing-api.html
+  - https://commercial.schlage.com/en/products/software/engage-for-access-control.html
+headers:
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+  asyncAccepted: 202
+limits:
+  - name: Schlage Home device-write async pattern
+    scope: integration
+    metric: writes
+    limit: not-published
+    notes: |
+      "POST, PUT, and DELETE requests to the device management endpoints will respond
+      with a 202 ACCEPTED response." Effective per-device throughput is shaped by the
+      time required for the device to acknowledge and for the corresponding webhook
+      to fire — partners should avoid issuing back-to-back writes against the same
+      device.
+  - name: Schlage Home webhook validation
+    scope: subscription
+    metric: validation
+    limit: 1
+    timeFrame: 30s
+    notes: |
+      Webhook validation OPTIONS request must receive a 2xx response within 30 seconds
+      or the subscription is not created.
+  - name: Schlage Home webhook success codes
+    scope: callback
+    metric: response-code
+    limit: 200-299
+    notes: |
+      Webhook receivers must respond with any HTTP status code in the 200-299 range.
+      Non-2xx responses trigger Schlage Home retry behaviour.
+  - name: Schlage Home webhook URL scheme
+    scope: callback
+    metric: scheme
+    limit: https
+    notes: HTTPS is required; non-HTTPS URLs are not accepted.
+  - name: ENGAGE per-site hardware ceiling
+    scope: site
+    metric: locks
+    limit: 100
+    notes: |
+      ENGAGE for access control supports up to 100 locks per site (500 for Schlage Control).
+  - name: ENGAGE per-site user ceiling
+    scope: site
+    metric: users
+    limit: 5000
+    notes: ENGAGE supports up to 5,000 users per site.
+  - name: ENGAGE Credentialing API request limits
+    scope: integration
+    metric: request
+    limit: not-published
+    notes: |
+      No public RPS / RPM ceiling is documented; throughput is shaped by the Azure
+      API Management subscription tier issued to the integrator.

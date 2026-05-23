@@ -1,0 +1,100 @@
+name: Allegion Vocabulary
+description: Domain vocabulary for the Allegion Developer Portal surfaces — Schlage Home
+  API (residential WiFi smart locks) and the ENGAGE Cloud Credentialing API (commercial
+  BLE mobile credentials). Captures the operational, capability, hardware, and event
+  dimensions referenced across artifacts in this repo.
+modified: '2026-05-23'
+sources:
+  - https://developer.allegion.com
+  - https://developer.allegion.com/en/products/schlage-home/schlage-home-api.html
+  - https://developer.allegion.com/en/products/schlage-mobile-credentials/credentialing-api.html
+  - https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+  - https://commercial.schlage.com/en/products/software/engage-for-access-control.html
+  - https://www.allegion.com/corp/en/about.html
+
+terms:
+  - term: Allegion plc
+    definition: NYSE-listed (ALLE) global security products company; $3.8B 2024 revenue,
+      13,000+ employees, 30+ brands across 120 countries.
+  - term: Schlage Home
+    definition: Allegion's residential WiFi smart-lock platform and consumer app, powering
+      the Schlage Encode, Encode Plus, and Encode Lever devices.
+  - term: ENGAGE
+    definition: Allegion's cloud-based commercial access-control and BLE credential
+      management platform; the cloud backend for the Credentialing API.
+  - term: Engage Cloud
+    definition: Allegion Device Management & Mobile Access Cloud — the RESTful platform
+      brokering interactions between Allegion hardware, mobile devices, and Access
+      Management Platforms.
+  - term: Schlage Encode
+    definition: WiFi-only residential deadbolt (model BE489WB) that connects directly
+      to Schlage Home without a bridge.
+  - term: Schlage Encode Plus
+    definition: WiFi residential deadbolt (BE499WB) adding NFC / Apple Home Key support.
+  - term: Schlage Encode Lever
+    definition: WiFi residential lever lock (FE789WB).
+  - term: Schlage Control B / NDEB / LEBMS / LEBMD
+    definition: Gen 2 commercial ENGAGE locks identifiable by the "B" model suffix.
+  - term: MTKB readers
+    definition: Schlage multi-technology BLE-capable card readers used with ENGAGE.
+  - term: Von Duprin RU / RM
+    definition: Commercial exit devices supported by ENGAGE.
+  - term: Yonomi
+    definition: Allegion-acquired smart-home cloud / SDK platform, brokering integrations
+      with smart-home automation platforms.
+  - term: Allegion Security Token Agreement
+    definition: Mandatory legal agreement establishing least-privileged-access to API,
+      SDK, and private GitHub repositories for ENGAGE / Mobile Credentials integration.
+  - term: Allegion BLE Mobile Access SDK
+    definition: iOS / Android SDK that downloads BLE Mobile Credentials and presents
+      them over Bluetooth to ENGAGE hardware.
+  - term: Allegion Device Communication SDK
+    definition: iOS / Android SDK for ENGAGE device commissioning, configuration, and
+      door-file dispatch.
+  - term: alle-subscription-key
+    definition: Azure API Management subscription key header required by the ENGAGE
+      Credentialing API.
+  - term: ENGAGE Basic Auth
+    definition: Basic authentication credentials derived from a user's ENGAGE account,
+      paired with the alle-subscription-key header.
+  - term: OAuth 2.0 Authorization Code
+    definition: The Schlage Home API authentication flow, executed against
+      https://account.schlage.com/OAuth2/authorize and /OAuth2/token.
+  - term: 202 ACCEPTED
+    definition: The HTTP status returned for POST / PUT / DELETE device-management
+      requests on the Schlage Home API; commands complete asynchronously.
+  - term: Command
+    definition: An asynchronous unit of work issued by a Schlage Home write operation;
+      observed via GET /devices/{id}/commands/{commandId} and CommandStatusUpdated webhooks.
+  - term: AccessCode (Always / Temporary / Recurring)
+    definition: Numeric door code with one of three schedule types — Always (no expiry),
+      Temporary (date-time range), Recurring (weekly windows).
+  - term: Access Code Synchronization
+    definition: July 2025 feature reconciling lock-stored codes with the cloud; partners
+      receive AccessCodeSynchronized webhooks for codes added or removed without user action.
+  - term: DST Offset (Access Code Webhooks)
+    definition: April 14, 2026 update — Access Code webhooks now include DST offset in
+      startDateTime and endDateTime fields.
+  - term: Webhook Signature
+    definition: HMAC-style signature on outbound webhook calls, verifiable with the public
+      key returned by the subscription resource.
+
+operationDimensions:
+  - dimension: Authentication
+    values: [OAuth2 Authorization Code, alle-subscription-key, Basic Auth, Combined Subscription Key + Basic]
+  - dimension: Pattern
+    values: [Synchronous Read, Asynchronous 202 Command, Webhook Subscription]
+  - dimension: Audience
+    values: [Residential Partner App, Smart-Home Automation Platform, Commercial Access Control System, Access Management Platform]
+  - dimension: Hardware Class
+    values: [Residential WiFi Lock, Commercial BLE Lock, Commercial BLE Reader, Exit Device]
+
+capabilityDimensions:
+  - dimension: Device Lifecycle
+    values: [Discover, Get State, Update Configuration, Lock, Unlock, Track Command, Receive Events]
+  - dimension: Access Code Lifecycle
+    values: [Create Always, Create Temporary, Create Recurring, Rename, Reschedule, Delete, Synchronize]
+  - dimension: Credential Lifecycle
+    values: [Upload, Get, List, Revoke]
+  - dimension: Event Stream
+    values: [Device State, Connectivity, Battery, Keypad Lockout, Alarm, Access Code Created, Access Code Used, Invalid Access Code, Access Code Synchronized, Command Status, User Sign-out, Integration Management]

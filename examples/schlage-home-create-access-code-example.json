@@ -1,0 +1,35 @@
+{
+  "_meta": {
+    "api": "Schlage Home API",
+    "operation": "createAccessCode",
+    "request": {
+      "method": "POST",
+      "url": "https://api.allegion.com/schlage-home/devices/d-9f2b7c10-3e44-4cba-a3a7-1b9c0c4e7d11/access-codes",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "name": "Cleaner",
+        "code": "482917",
+        "accessorType": "Guest",
+        "schedule": {
+          "type": "Recurring",
+          "daysOfWeek": ["Tuesday", "Friday"],
+          "startTime": "09:00",
+          "endTime": "13:00"
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 202,
+    "body": {
+      "commandId": "cmd-7b1e9b3c-6f02-4f3a-b5d1-8b80a2c6c11d",
+      "deviceId": "d-9f2b7c10-3e44-4cba-a3a7-1b9c0c4e7d11",
+      "type": "CreateAccessCode",
+      "status": "Pending",
+      "createdAt": "2026-05-22T19:14:08Z"
+    }
+  }
+}

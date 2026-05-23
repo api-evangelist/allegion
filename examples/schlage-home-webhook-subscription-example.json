@@ -1,0 +1,48 @@
+{
+  "_meta": {
+    "api": "Schlage Home API",
+    "operation": "createWebhookSubscription",
+    "notes": [
+      "On subscription creation Schlage Home sends a validation OPTIONS request to the URL; the URL must respond 2xx within 30 seconds or the subscription is not created.",
+      "Webhook signatures are verified using a public key."
+    ],
+    "request": {
+      "method": "POST",
+      "url": "https://api.allegion.com/schlage-home/webhooks/subscriptions",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "url": "https://partner.example.com/hooks/schlage",
+        "eventTypes": [
+          "DeviceLockStateChanged",
+          "DeviceConnectivityStateChanged",
+          "DeviceBatteryLevelChanged",
+          "AccessCodeUsed",
+          "InvalidAccessCodeAttempted",
+          "AccessCodeSynchronized",
+          "CommandStatusUpdated"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "subscriptionId": "sub-d9f4a1ec-2a5e-4f6f-bf26-3c1d72fa4e0c",
+      "url": "https://partner.example.com/hooks/schlage",
+      "eventTypes": [
+        "DeviceLockStateChanged",
+        "DeviceConnectivityStateChanged",
+        "DeviceBatteryLevelChanged",
+        "AccessCodeUsed",
+        "InvalidAccessCodeAttempted",
+        "AccessCodeSynchronized",
+        "CommandStatusUpdated"
+      ],
+      "signingPublicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQE...\n-----END PUBLIC KEY-----",
+      "createdAt": "2026-05-22T19:18:42Z"
+    }
+  }
+}

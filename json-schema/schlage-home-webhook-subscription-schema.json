@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/allegion/json-schema/schlage-home-webhook-subscription-schema.json",
+  "title": "Schlage Home Webhook Subscription",
+  "description": "A partner-registered HTTPS callback URL for Schlage Home device, command, access code, and account events. URLs must respond to a validation OPTIONS request within 30 seconds and require HTTPS.",
+  "type": "object",
+  "required": ["subscriptionId", "url", "eventTypes"],
+  "properties": {
+    "subscriptionId": { "type": "string" },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "description": "HTTPS callback endpoint. Non-HTTPS URLs are rejected."
+    },
+    "eventTypes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "DeviceLockStateChanged",
+          "DeviceConnectivityStateChanged",
+          "DeviceBatteryLevelChanged",
+          "DeviceKeypadLockedOut",
+          "DeviceAlarmTriggered",
+          "AccessCodeCreated",
+          "AccessCodeUpdated",
+          "AccessCodeDeleted",
+          "AccessCodeUsed",
+          "InvalidAccessCodeAttempted",
+          "AccessCodeSynchronized",
+          "CommandStatusUpdated",
+          "UserSignedOut",
+          "IntegrationManagementUpdated"
+        ]
+      }
+    },
+    "signingPublicKey": {
+      "type": "string",
+      "description": "Public key used to verify webhook signatures."
+    },
+    "createdAt": { "type": "string", "format": "date-time" }
+  }
+}

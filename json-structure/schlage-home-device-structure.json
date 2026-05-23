@@ -1,0 +1,35 @@
+{
+  "title": "Schlage Home Device Structure",
+  "description": "Operational structure documentation for the Schlage Home Device entity, mapping each field to its source endpoint and the asynchronous command pattern that mutates it.",
+  "entity": "Device",
+  "primaryKey": "deviceId",
+  "endpoints": {
+    "list": "GET /devices",
+    "get": "GET /devices/{deviceId}",
+    "update": "PUT /devices/{deviceId}",
+    "lock": "POST /devices/{deviceId}/lock",
+    "unlock": "POST /devices/{deviceId}/unlock"
+  },
+  "fields": [
+    { "name": "deviceId", "type": "string", "writable": false, "source": "Allegion-assigned" },
+    { "name": "name", "type": "string", "writable": true, "source": "End-user labelled" },
+    { "name": "model", "type": "enum", "writable": false, "values": ["BE489WB", "BE499WB", "FE789WB"] },
+    { "name": "firmwareVersion", "type": "string", "writable": false, "source": "Reported by device" },
+    { "name": "batteryLevel", "type": "integer", "writable": false, "source": "Reported by device" },
+    { "name": "wifiSignalStrength", "type": "integer", "writable": false, "addedOn": "2025-03-06", "source": "Reported by device" },
+    { "name": "connectivityState", "type": "enum", "writable": false, "values": ["Online", "Offline"] },
+    { "name": "lockState", "type": "enum", "writable": false, "values": ["Locked", "Unlocked", "Unknown"], "changedVia": ["POST /devices/{id}/lock", "POST /devices/{id}/unlock", "Physical interaction"] }
+  ],
+  "asyncPattern": {
+    "description": "POST, PUT, and DELETE requests to the device management endpoints will respond with a 202 ACCEPTED response. The final outcome is surfaced via a CommandStatusUpdated webhook and is readable at GET /devices/{deviceId}/commands/{commandId}.",
+    "successResponse": 202,
+    "completionSignal": "CommandStatusUpdated webhook + GET /devices/{deviceId}/commands/{commandId}"
+  },
+  "webhookEvents": [
+    "DeviceLockStateChanged",
+    "DeviceConnectivityStateChanged",
+    "DeviceBatteryLevelChanged",
+    "DeviceKeypadLockedOut",
+    "DeviceAlarmTriggered"
+  ]
+}

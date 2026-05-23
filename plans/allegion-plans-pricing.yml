@@ -1,0 +1,135 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Allegion
+providerId: allegion
+created: '2026-05-23'
+modified: '2026-05-23'
+reconciled: false
+tags:
+  - Smart Lock
+  - Access Control
+  - Mobile Credentials
+  - BLE
+  - Schlage Home
+  - ENGAGE
+description: |
+  Allegion does not publish public, per-call pricing for the Schlage Home API or for
+  the ENGAGE Cloud Credentialing API. Commercial access to either surface is gated
+  by partner onboarding rather than a self-service price sheet:
+
+    - Schlage Home API: contact a Schlage Home Representative before getting started;
+      a client ID / secret is requested through the developer support Zendesk portal.
+    - ENGAGE Credentialing API: integrators must sign the Allegion Security Token
+      Agreement before being granted API credentials and SDK repository access.
+
+  This file therefore captures the commercial-shape and entitlement gates rather
+  than per-request unit prices. Underlying hardware list prices (Schlage Encode
+  from $299, Encode Plus from $329, Encode Lever from $309, Arrive from $199)
+  are paid through retail / channel.
+sources:
+  - https://developer.allegion.com/en/products/schlage-home/getting-started.html
+  - https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+  - https://commercial.schlage.com/en/products/software/engage-for-access-control.html
+  - https://www.schlage.com
+plans:
+  - id: schlage-home-partner
+    name: Schlage Home API Partner Access
+    type: partner-onboarded
+    description: |
+      Partner-onboarded access to the Schlage Home API V2 (devices, access codes,
+      webhooks). Requires a Schlage Home Representative engagement and an approved
+      client ID / secret request through the Allegion developer support Zendesk
+      portal. No public per-call price is published.
+    entries:
+      - label: Per-call price (Schlage Home API)
+        name: schlage_home_per_call_price
+        type: not-published
+        metric: request
+        limit: -1
+        timeFrame: usage
+        unit: 1
+        price: 'not-published'
+        userMultiplied: false
+      - label: Per-device fee
+        name: schlage_home_per_device_fee
+        type: not-published
+        metric: device
+        limit: -1
+        timeFrame: monthly
+        unit: 1
+        price: 'not-published'
+        userMultiplied: false
+    requirements:
+      - Contact a Schlage Home Representative before getting started
+      - Client ID / Client Secret requested via developersupport.allegion.com Zendesk portal
+      - HTTPS-only webhook callback URL
+      - Acceptance of Allegion developer terms
+
+  - id: engage-credentialing-partner
+    name: ENGAGE Cloud Credentialing API Access
+    type: partner-onboarded
+    description: |
+      Access to the ENGAGE Cloud Credentialing API and the iOS / Android Allegion
+      Mobile SDKs (BLE Mobile Access SDK, Device Communication SDK). Granted only
+      after the Allegion Security Token Agreement is executed.
+    entries:
+      - label: Per-credential price
+        name: engage_per_credential_price
+        type: not-published
+        metric: credential
+        limit: -1
+        timeFrame: usage
+        unit: 1
+        price: 'not-published'
+        userMultiplied: false
+      - label: Per-site / per-tenant fee
+        name: engage_per_site_fee
+        type: not-published
+        metric: site
+        limit: -1
+        timeFrame: monthly
+        unit: 1
+        price: 'not-published'
+        userMultiplied: false
+    requirements:
+      - Executed Allegion Security Token Agreement
+      - Allegion-issued alle-subscription-key
+      - ENGAGE account (for Basic Auth credentials)
+      - Compatible Gen 2 ENGAGE hardware (Control B, NDEB, LEBMS / LEBMD, MTKB)
+      - Compatible mobile platforms (iOS 15.6+ / iPhone SE+; Android 11+)
+
+  - id: hardware-channel
+    name: Hardware Channel Pricing (Schlage Encode Family)
+    type: hardware
+    description: Indicative residential hardware list prices that put devices on the
+      Schlage Home API. Paid via retail / channel, not via the API.
+    entries:
+      - label: Schlage Encode Smart WiFi Deadbolt
+        name: schlage_encode
+        type: one-time
+        metric: device
+        unit: 1
+        price: '299.00'
+        currency: USD
+      - label: Schlage Encode Plus Smart WiFi Deadbolt
+        name: schlage_encode_plus
+        type: one-time
+        metric: device
+        unit: 1
+        price: '329.00'
+        currency: USD
+      - label: Schlage Encode Lever
+        name: schlage_encode_lever
+        type: one-time
+        metric: device
+        unit: 1
+        price: '309.00'
+        currency: USD
+      - label: Schlage Arrive Smart WiFi Deadbolt
+        name: schlage_arrive
+        type: one-time
+        metric: device
+        unit: 1
+        price: '199.00'
+        currency: USD

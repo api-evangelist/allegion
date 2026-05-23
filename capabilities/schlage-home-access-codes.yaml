@@ -1,0 +1,184 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Schlage Home API — Access Codes
+  description: 'Schlage Home API — Access Codes. 5 operations covering full CRUD for
+    per-device numeric access codes with Always / Temporary / Recurring schedules.
+    Access code names must be 1-12 alpha-numeric characters; updates to the name do not
+    change the numeric code. Self-contained Naftiko capability covering one Allegion
+    business surface.'
+  tags:
+    - Allegion
+    - Schlage Home
+    - Access Codes
+    - Schedules
+  created: '2026-05-23'
+  modified: '2026-05-23'
+binds:
+  - namespace: env
+    keys:
+      SCHLAGE_HOME_ACCESS_TOKEN: SCHLAGE_HOME_ACCESS_TOKEN
+capability:
+  consumes:
+    - type: http
+      namespace: schlage-home-access-codes
+      baseUri: https://api.allegion.com/schlage-home
+      description: Schlage Home API — Access Codes business capability. Self-contained, no shared references.
+      resources:
+        - name: accessCodes
+          path: /devices/{deviceId}/access-codes
+          operations:
+            - name: listAccessCodes
+              method: GET
+              description: List access codes stored on the device.
+              inputParameters:
+                - name: deviceId
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+            - name: createAccessCode
+              method: POST
+              description: Create a numeric access code with an Always, Temporary, or Recurring schedule (202 ACCEPTED).
+              inputParameters:
+                - name: deviceId
+                  in: path
+                  type: string
+                  required: true
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: accessCode
+          path: /devices/{deviceId}/access-codes/{accessCodeId}
+          operations:
+            - name: getAccessCode
+              method: GET
+              description: Get a single access code.
+              inputParameters:
+                - name: deviceId
+                  in: path
+                  type: string
+                  required: true
+                - name: accessCodeId
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+            - name: updateAccessCode
+              method: PUT
+              description: Update an access code name or schedule (202 ACCEPTED). Name updates do not change the numeric code.
+              inputParameters:
+                - name: deviceId
+                  in: path
+                  type: string
+                  required: true
+                - name: accessCodeId
+                  in: path
+                  type: string
+                  required: true
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+            - name: deleteAccessCode
+              method: DELETE
+              description: Delete an access code (202 ACCEPTED).
+              inputParameters:
+                - name: deviceId
+                  in: path
+                  type: string
+                  required: true
+                - name: accessCodeId
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+      authentication:
+        type: bearer
+        token: '{{env.SCHLAGE_HOME_ACCESS_TOKEN}}'
+  exposes:
+    - type: rest
+      namespace: schlage-home-access-codes-rest
+      port: 8080
+      description: REST adapter for Schlage Home Access Codes. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+      resources:
+        - path: /v1/devices/{deviceId}/access-codes
+          name: accessCodes
+          description: REST surface for listAccessCodes and createAccessCode.
+          operations:
+            - method: GET
+              name: listAccessCodes
+              description: List Access Codes
+              call: schlage-home-access-codes.listAccessCodes
+              with:
+                deviceId: rest.deviceId
+              outputParameters:
+                - type: object
+                  mapping: $.
+            - method: POST
+              name: createAccessCode
+              description: Create Access Code
+              call: schlage-home-access-codes.createAccessCode
+              with:
+                deviceId: rest.deviceId
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/devices/{deviceId}/access-codes/{accessCodeId}
+          name: accessCode
+          description: REST surface for getAccessCode, updateAccessCode, deleteAccessCode.
+          operations:
+            - method: GET
+              name: getAccessCode
+              description: Get Access Code
+              call: schlage-home-access-codes.getAccessCode
+              with:
+                deviceId: rest.deviceId
+                accessCodeId: rest.accessCodeId
+              outputParameters:
+                - type: object
+                  mapping: $.
+            - method: PUT
+              name: updateAccessCode
+              description: Update Access Code
+              call: schlage-home-access-codes.updateAccessCode
+              with:
+                deviceId: rest.deviceId
+                accessCodeId: rest.accessCodeId
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+            - method: DELETE
+              name: deleteAccessCode
+              description: Delete Access Code
+              call: schlage-home-access-codes.deleteAccessCode
+              with:
+                deviceId: rest.deviceId
+                accessCodeId: rest.accessCodeId
+              outputParameters:
+                - type: object
+                  mapping: $.

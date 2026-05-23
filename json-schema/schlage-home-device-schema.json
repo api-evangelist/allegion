@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/allegion/json-schema/schlage-home-device-schema.json",
+  "title": "Schlage Home Device",
+  "description": "A WiFi-enabled Schlage Home smart lock (Encode, Encode Plus, or Encode Lever) accessible through the Schlage Home API V2.",
+  "type": "object",
+  "required": ["deviceId", "model", "connectivityState", "lockState"],
+  "properties": {
+    "deviceId": {
+      "type": "string",
+      "description": "Stable unique identifier for the device."
+    },
+    "name": {
+      "type": "string",
+      "description": "End-user assigned device name (e.g. 'Front Door')."
+    },
+    "model": {
+      "type": "string",
+      "enum": ["BE489WB", "BE499WB", "FE789WB"],
+      "description": "Schlage hardware model: Encode Deadbolt, Encode Plus, or Encode Lever."
+    },
+    "firmwareVersion": { "type": "string" },
+    "batteryLevel": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "wifiSignalStrength": {
+      "type": "integer",
+      "description": "WiFi RSSI in dBm. Surfaced from the GET Device endpoint since March 6, 2025."
+    },
+    "connectivityState": {
+      "type": "string",
+      "enum": ["Online", "Offline"]
+    },
+    "lockState": {
+      "type": "string",
+      "enum": ["Locked", "Unlocked", "Unknown"]
+    },
+    "timeZone": {
+      "type": "string",
+      "description": "IANA time zone identifier."
+    }
+  }
+}

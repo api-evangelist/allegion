@@ -1,0 +1,70 @@
+extends:
+  - spectral:oas
+
+rules:
+  # Schlage Home API operation summaries use Title Case
+  schlage-home-summary-title-case:
+    description: Operation summaries must use Title Case
+    message: "Summary '{{value}}' should start with an uppercase letter"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z]"
+
+  # Schlage Home uses OAuth 2.0 authorization code flow
+  schlage-home-oauth-only:
+    description: Every operation must require the OAuth2 security scheme registered against account.schlage.com
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].security[*]"
+    then:
+      field: OAuth2
+      function: truthy
+
+  # Device write operations return 202 ACCEPTED
+  schlage-home-async-202-on-writes:
+    description: POST, PUT, and DELETE responses against /devices paths must declare 202 ACCEPTED (async command pattern).
+    severity: warn
+    given: "$.paths[*][post,put,delete].responses"
+    then:
+      field: "202"
+      function: truthy
+
+  # Webhook subscription URLs must be HTTPS
+  schlage-home-webhook-https:
+    description: Webhook subscription URL fields must require HTTPS.
+    severity: error
+    given: "$.components.schemas.WebhookSubscription.properties.url"
+    then:
+      field: pattern
+      function: truthy
+
+  # Access code names must obey 1-12 alpha-numeric
+  schlage-home-access-code-name:
+    description: AccessCode.name must be 1-12 alpha-numeric characters per Schlage Home documentation.
+    severity: warn
+    given: "$.components.schemas.AccessCode.properties.name"
+    then:
+      field: pattern
+      function: truthy
+
+  # Server base URL must be api.allegion.com
+  schlage-home-server-host:
+    description: Servers must point at api.allegion.com.
+    severity: warn
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://api\\.allegion\\.com"
+
+  # OAuth2 token endpoint must be account.schlage.com
+  schlage-home-oauth-token-url:
+    description: OAuth2 token URL must be https://account.schlage.com/OAuth2/token.
+    severity: warn
+    given: "$.components.securitySchemes.OAuth2.flows.authorizationCode.tokenUrl"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://account\\.schlage\\.com/OAuth2/token$"

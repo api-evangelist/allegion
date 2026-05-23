@@ -1,0 +1,62 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "allegion": "https://api-evangelist.github.io/allegion/json-ld/allegion-context.jsonld#",
+    "engage": "https://api-evangelist.github.io/allegion/json-ld/allegion-context.jsonld#engage:",
+    "schlage": "https://api-evangelist.github.io/allegion/json-ld/allegion-context.jsonld#schlage:",
+
+    "Device": "schlage:Device",
+    "deviceId": { "@id": "schlage:deviceId", "@type": "schema:identifier" },
+    "model": { "@id": "schlage:model" },
+    "firmwareVersion": { "@id": "schlage:firmwareVersion" },
+    "batteryLevel": { "@id": "schlage:batteryLevel", "@type": "schema:Integer" },
+    "wifiSignalStrength": { "@id": "schlage:wifiSignalStrength", "@type": "schema:Integer" },
+    "connectivityState": { "@id": "schlage:connectivityState" },
+    "lockState": { "@id": "schlage:lockState" },
+    "timeZone": { "@id": "schema:timezone" },
+
+    "AccessCode": "schlage:AccessCode",
+    "accessCodeId": { "@id": "schlage:accessCodeId" },
+    "code": { "@id": "schlage:code" },
+    "name": { "@id": "schema:name" },
+    "accessorType": { "@id": "schlage:accessorType" },
+
+    "Schedule": "schlage:Schedule",
+    "AlwaysSchedule": "schlage:AlwaysSchedule",
+    "TemporarySchedule": "schlage:TemporarySchedule",
+    "RecurringSchedule": "schlage:RecurringSchedule",
+    "startDateTime": { "@id": "schlage:startDateTime", "@type": "schema:DateTime" },
+    "endDateTime": { "@id": "schlage:endDateTime", "@type": "schema:DateTime" },
+    "daysOfWeek": { "@id": "schlage:daysOfWeek", "@container": "@set" },
+    "startTime": { "@id": "schlage:startTime" },
+    "endTime": { "@id": "schlage:endTime" },
+
+    "Command": "schlage:Command",
+    "commandId": { "@id": "schlage:commandId" },
+    "type": { "@id": "schema:additionalType" },
+    "status": { "@id": "schema:eventStatus" },
+    "errorMessage": { "@id": "schema:errorMessage" },
+    "createdAt": { "@id": "schema:dateCreated", "@type": "schema:DateTime" },
+    "completedAt": { "@id": "schema:dateModified", "@type": "schema:DateTime" },
+
+    "WebhookSubscription": "schlage:WebhookSubscription",
+    "subscriptionId": { "@id": "schlage:subscriptionId" },
+    "url": { "@id": "schema:url", "@type": "@id" },
+    "eventTypes": { "@id": "schlage:eventTypes", "@container": "@set" },
+    "signingPublicKey": { "@id": "schlage:signingPublicKey" },
+
+    "MobileCredential": "engage:MobileCredential",
+    "credentialId": { "@id": "engage:credentialId" },
+    "userId": { "@id": "engage:userId" },
+    "userEmail": { "@id": "schema:email" },
+    "userName": { "@id": "schema:name" },
+    "accessProfile": { "@id": "engage:accessProfile" },
+    "validFrom": { "@id": "schema:validFrom", "@type": "schema:DateTime" },
+    "validTo": { "@id": "schema:validThrough", "@type": "schema:DateTime" },
+    "revokedAt": { "@id": "engage:revokedAt", "@type": "schema:DateTime" },
+
+    "EngageDevice": "engage:Device",
+    "siteId": { "@id": "engage:siteId" }
+  }
+}

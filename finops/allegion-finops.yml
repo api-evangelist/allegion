@@ -1,0 +1,112 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Allegion
+providerId: allegion
+created: '2026-05-23'
+modified: '2026-05-23'
+reconciled: false
+tags:
+  - FinOps
+  - Cost Management
+  - FOCUS
+  - Smart Lock
+  - Access Control
+  - Mobile Credentials
+description: |
+  FOCUS-aligned FinOps profile for Allegion developer surfaces. Allegion does not
+  publish a per-call price for the Schlage Home API or the ENGAGE Cloud Credentialing
+  API, so the cost model is dominated by (a) one-time hardware purchases (Schlage
+  Encode family list prices $199-$329 per device) and (b) partner-onboarded
+  software / SDK access governed by the Allegion Security Token Agreement and a
+  Schlage Home Representative engagement. The meters below capture the natural
+  cost-allocation dimensions partners should report on internally.
+sources:
+  - https://developer.allegion.com/en/products/schlage-home/getting-started.html
+  - https://developer.allegion.com/en/products/schlage-mobile-credentials/credentialing-api.html
+  - https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+  - https://commercial.schlage.com/en/products/software/engage-for-access-control.html
+  - https://www.schlage.com
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Allegion plc
+serviceCategory: Identity, Security, and Access
+billingModel:
+  pricingCategory: Hardware + Partner-Negotiated SaaS
+  billingFrequency: Not published (negotiated)
+  billingCurrency: USD
+  chargeCategories:
+    - Hardware Purchase
+    - SDK / API Subscription
+    - Per-Credential (negotiated)
+    - Professional Services / Onboarding
+focusColumns:
+  ServiceName: Allegion Developer Platform
+  ServiceCategory: Identity, Security, and Access
+  ProviderName: Allegion
+  PublisherName: Allegion plc
+  InvoiceIssuerName: Allegion plc
+  BillingCurrency: USD
+meters:
+  - name: schlage_home_devices
+    unit: device
+    aggregation: max
+    dimensions:
+      - model
+      - tenant
+      - region
+  - name: schlage_home_access_codes
+    unit: code
+    aggregation: max
+    dimensions:
+      - device_id
+      - schedule_type
+  - name: schlage_home_webhook_events
+    unit: event
+    aggregation: sum
+    dimensions:
+      - event_type
+      - device_model
+  - name: engage_mobile_credentials
+    unit: credential
+    aggregation: max
+    dimensions:
+      - site_id
+      - access_profile
+      - status
+  - name: engage_sites
+    unit: site
+    aggregation: max
+    dimensions:
+      - country
+      - hardware_class
+  - name: hardware_purchase
+    unit: unit
+    aggregation: sum
+    dimensions:
+      - sku
+      - channel
+principles:
+  - name: Visibility
+    description: |
+      Tag every Schlage Home device and ENGAGE site at provisioning with tenant /
+      property / cost-centre. Without published per-call prices, visibility comes
+      from device and credential inventory rather than API meters.
+  - name: Allocation
+    description: |
+      Allocate hardware capex by site; allocate SDK / Security Token Agreement fees
+      by integrator-owned product line; allocate credential issuance to end-tenant.
+  - name: Optimization
+    description: |
+      Consolidate webhook subscriptions per integration (one URL, many event types)
+      to reduce egress and partner-side processing cost. Revoke ENGAGE credentials
+      promptly on user offboarding to keep per-credential charges down.
+  - name: Accountability
+    description: |
+      Treat Allegion Security Token Agreement obligations as a compliance line item;
+      audit private GitHub SDK repository access alongside the standard FinOps
+      access-rights review.
