@@ -1,0 +1,21 @@
+{
+  "repo": "allegion",
+  "feeds": [
+    {
+      "source": "https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html",
+      "feed_url": "https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://developer.allegion.com/en/products/schlage-home/getting_started_res_access_codes.html",
+      "feed_url": "https://developer.allegion.com/en/products/schlage-home/getting_started_res_access_codes.html",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-01T23:35:02Z"
+}
