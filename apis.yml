@@ -1,12 +1,11 @@
 aid: allegion
 name: Allegion
-description: Allegion plc is a global security products company with $3.8B in 2024 revenue,
-  13,000+ employees, and 30+ brands across 120 countries (Schlage, Von Duprin, LCN, CISA,
-  Steelcraft, Interflex, SimonsVoss, Yonomi). The Allegion Developer Portal exposes two
-  documented integration surfaces - the Schlage Home API V2 (residential WiFi smart locks)
-  and the ENGAGE Cloud Credentialing API (commercial BLE mobile credentials), plus iOS and
-  Android Device Communication and BLE Mobile Access SDKs gated behind an Allegion Security
-  Token Agreement.
+description: >-
+  Allegion plc is a global security products company with $3.8B in 2024 revenue, 13,000+ employees, and 30+ brands
+  across 120 countries (Schlage, Von Duprin, LCN, CISA, Steelcraft, Interflex, SimonsVoss, Yonomi). The Allegion
+  Developer Portal exposes two documented integration surfaces - the Schlage Home API V2 (residential WiFi smart locks)
+  and the ENGAGE Cloud Credentialing API (commercial BLE mobile credentials), plus iOS and Android Device Communication
+  and BLE Mobile Access SDKs gated behind an Allegion Security Token Agreement.
 url: https://github.com/api-evangelist/allegion
 humanURL: https://developer.allegion.com
 image: https://www.allegion.com/content/dam/allegion-corporate/logos/allegion-logo.svg
@@ -61,7 +60,8 @@ common:
     url: https://developer.allegion.com/en/products/schlage-mobile-credentials/mobile-sdk.html
   - type: SDK
     name: Allegion Device Communication SDK (iOS, Android) - private GitHub
-    url: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+    url: >-
+      https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
   - type: Blog
     url: https://developer.allegion.com/en/products/schlage-home/schlage-home-api-blog.html
   - type: CorporateSite
@@ -93,31 +93,39 @@ common:
     url: https://investor.allegion.com
   - type: TermsOfService
     name: Allegion Security Token Agreement (required for ENGAGE / Mobile Credentials access)
-    url: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+    url: >-
+      https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
   - type: PrivacyPolicy
     url: https://www.allegion.com/corp/en/privacy-policy.html
   - type: Features
     data:
       - Schlage Home API V2 OAuth 2.0 Authorization Code flow against https://account.schlage.com
-      - WebHooks subscription API for device state, access code, command, and account events (HTTPS only, 30s validation window)
+      - >-
+        WebHooks subscription API for device state, access code, command, and account events (HTTPS only, 30s validation
+        window)
       - 202 ACCEPTED asynchronous command pattern for POST / PUT / DELETE device operations
       - DST-offset-aware Access Code Webhooks (April 2026)
       - Access Code Synchronization to reconcile lock-stored codes with cloud (July 2025)
       - WiFi signal strength surfaced in GET Device endpoint (March 2025)
-      - ENGAGE Cloud Credentialing API for BLE Mobile Credential upload, delete, list using alle-subscription-key header + Basic Auth
+      - >-
+        ENGAGE Cloud Credentialing API for BLE Mobile Credential upload, delete, list using alle-subscription-key header
+        + Basic Auth
       - Allegion Device Communication SDK (iOS, Android) for ENGAGE device commissioning and door file distribution
       - Allegion BLE Mobile Access SDK (iOS, Android) for credential download, BLE discovery, pre-connection unlock
       - Supports Schlage Encode Deadbolt, Encode Plus, Encode Levers (WiFi residential)
       - Supports Gen 2 ENGAGE hardware (Control BE467B / FE410B, NDEB, LEBMS / LEBMD, MTKB readers)
       - Webhook signature verification via public key
       - HTTPS-only callback URLs, 200-299 success range
-      - Onboarding requires Schlage Home Representative approval (residential) or Allegion Security Token Agreement (mobile credentials)
+      - >-
+        Onboarding requires Schlage Home Representative approval (residential) or Allegion Security Token Agreement
+        (mobile credentials)
     sources:
       - https://developer.allegion.com/en/products/schlage-home/getting-started.html
       - https://developer.allegion.com/en/products/schlage-home/schlage-home-api.html
       - https://developer.allegion.com/en/products/schlage-home/best-practices.html
       - https://developer.allegion.com/en/products/schlage-mobile-credentials/credentialing-api.html
-      - https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+      - >-
+        https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
       - https://developer.allegion.com/en/release-notes.html
     updated: '2026-05-23'
   - type: Scale
@@ -162,12 +170,12 @@ common:
 apis:
   - aid: allegion:schlage-home-api
     name: Schlage Home API
-    description: REST + webhook API for the Schlage Home residential smart-lock platform.
-      Designed for business and commercial integrations (partner apps, smart-home
-      automation platforms) that scale across residential deployments of WiFi-enabled
-      Schlage Encode, Encode Plus, and Encode Lever devices. Uses OAuth 2.0 Authorization
-      Code flow against account.schlage.com, async 202 ACCEPTED command pattern, and
-      webhook subscriptions for device, command, access code, and account events.
+    description: >-
+      REST + webhook API for the Schlage Home residential smart-lock platform. Designed for business and commercial
+      integrations (partner apps, smart-home automation platforms) that scale across residential deployments of
+      WiFi-enabled Schlage Encode, Encode Plus, and Encode Lever devices. Uses OAuth 2.0 Authorization Code flow against
+      account.schlage.com, async 202 ACCEPTED command pattern, and webhook subscriptions for device, command, access
+      code, and account events.
     humanURL: https://developer.allegion.com/en/products/schlage-home/schlage-home-api.html
     baseURL: https://api.allegion.com/schlage-home
     tags:
@@ -199,12 +207,6 @@ apis:
         url: https://developer.allegion.com/en/release-notes.html
       - type: OpenAPI
         url: openapi/schlage-home-openapi.yml
-      - type: NaftikoCapability
-        url: capabilities/schlage-home-devices.yaml
-      - type: NaftikoCapability
-        url: capabilities/schlage-home-access-codes.yaml
-      - type: NaftikoCapability
-        url: capabilities/schlage-home-webhooks.yaml
       - type: SpectralRules
         url: rules/schlage-home-rules.yml
       - type: JSONSchema
@@ -223,13 +225,12 @@ apis:
         url: examples/schlage-home-webhook-subscription-example.json
   - aid: allegion:engage-credentialing-api
     name: ENGAGE Cloud Credentialing API
-    description: REST API on the Allegion Device Management and Mobile Access Cloud
-      (Engage Cloud) for managing BLE Mobile Credentials used to unlock ENGAGE Gen 2
-      hardware (Schlage Control B, NDEB, LEBMS/LEBMD locks; MTKB readers; Von Duprin
-      RU/RM). Brokers interactions between Access Control Systems (ACS), the Allegion
-      Mobile SDKs, and Schlage hardware. Authentication requires an alle-subscription-key
-      header plus a Basic Auth token derived from ENGAGE credentials; integrators must
-      sign the Allegion Security Token Agreement before receiving SDK and API access.
+    description: >-
+      REST API on the Allegion Device Management and Mobile Access Cloud (Engage Cloud) for managing BLE Mobile
+      Credentials used to unlock ENGAGE Gen 2 hardware (Schlage Control B, NDEB, LEBMS/LEBMD locks; MTKB readers; Von
+      Duprin RU/RM). Brokers interactions between Access Control Systems (ACS), the Allegion Mobile SDKs, and Schlage
+      hardware. Authentication requires an alle-subscription-key header plus a Basic Auth token derived from ENGAGE
+      credentials; integrators must sign the Allegion Security Token Agreement before receiving SDK and API access.
     humanURL: https://developer.allegion.com/en/products/schlage-mobile-credentials/credentialing-api.html
     baseURL: https://api.allegion.com/engage
     tags:
@@ -246,23 +247,24 @@ apis:
       - type: GettingStarted
         url: https://developer.allegion.com/en/products/schlage-mobile-credentials/getting-started.html
       - type: Tutorials
-        url: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+        url: >-
+          https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
       - type: SDK
         name: Allegion BLE Mobile Access SDK (iOS + Android, private GitHub)
         url: https://developer.allegion.com/en/products/schlage-mobile-credentials/mobile-sdk.html
       - type: SDK
         name: Allegion Device Communication SDK (iOS + Android, private GitHub)
-        url: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+        url: >-
+          https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
       - type: Authentication
         name: alle-subscription-key header + Basic Auth from ENGAGE credentials
         url: https://developer.allegion.com/en/products/schlage-mobile-credentials/credentialing-api.html
       - type: TermsOfService
         name: Allegion Security Token Agreement (mandatory)
-        url: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+        url: >-
+          https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
       - type: OpenAPI
         url: openapi/engage-credentialing-openapi.yml
-      - type: NaftikoCapability
-        url: capabilities/engage-credentials.yaml
       - type: SpectralRules
         url: rules/engage-credentialing-rules.yml
       - type: JSONSchema
