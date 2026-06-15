@@ -1,0 +1,1981 @@
+{
+  "item": [
+    {
+      "id": "5efffcab-da8b-4903-b0ab-51656ae49337",
+      "name": "Devices",
+      "description": {
+        "content": "Manage and read Schlage Home WiFi-enabled smart locks",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4f5577d4-57da-43b0-a91f-258ea8c1ddf8",
+          "name": "List Devices",
+          "request": {
+            "name": "List Devices",
+            "description": {
+              "content": "Returns the WiFi-enabled Schlage Home devices the authenticated user account has authorized for this integration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bd8d2da6-b2c6-4cf7-91d5-f2e03502b20b",
+              "name": "Devices returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"devices\": [\n    {\n      \"deviceId\": \"string\",\n      \"name\": \"string\",\n      \"model\": \"BE489WB\",\n      \"firmwareVersion\": \"string\",\n      \"batteryLevel\": 1,\n      \"wifiSignalStrength\": 344,\n      \"connectivityState\": \"Online\",\n      \"lockState\": \"Locked\",\n      \"timeZone\": \"string\"\n    },\n    {\n      \"deviceId\": \"string\",\n      \"name\": \"string\",\n      \"model\": \"BE489WB\",\n      \"firmwareVersion\": \"string\",\n      \"batteryLevel\": 23,\n      \"wifiSignalStrength\": 3218,\n      \"connectivityState\": \"Offline\",\n      \"lockState\": \"Locked\",\n      \"timeZone\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf0b5c0b-4653-4801-8b13-957240d5f3bd",
+              "name": "Access token missing, expired, or insufficient scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a3975b1-5e9c-4f29-a1af-0fce193a0778",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6aa822b9-2ff5-46b8-ab60-f716b664f36f",
+          "name": "Get Device",
+          "request": {
+            "name": "Get Device",
+            "description": {
+              "content": "Returns a single device including lock state, battery level, WiFi signal strength, firmware, and connectivity state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc99b13d-799d-46d1-b3d6-9a6b347085f3",
+              "name": "Device returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deviceId\": \"string\",\n  \"name\": \"string\",\n  \"model\": \"BE499WB\",\n  \"firmwareVersion\": \"string\",\n  \"batteryLevel\": 61,\n  \"wifiSignalStrength\": 8978,\n  \"connectivityState\": \"Offline\",\n  \"lockState\": \"Unlocked\",\n  \"timeZone\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab1ac728-68d3-4102-9804-c3cc7a037d23",
+              "name": "Access token missing, expired, or insufficient scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf4e6ae4-0e8b-44e1-a078-28b9c81eb2f2",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9eebb1fa-47a0-4bc3-a114-117994d6709d",
+          "name": "Update Device",
+          "request": {
+            "name": "Update Device",
+            "description": {
+              "content": "Update device configuration (name, default lock timer, vacation mode). Returns 202 ACCEPTED and emits a command that completes asynchronously.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"autoLockDelaySeconds\": \"<integer>\",\n  \"vacationMode\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3dd3c20f-ea18-4ad3-b34d-2164d1e4d83c",
+              "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"autoLockDelaySeconds\": \"<integer>\",\n  \"vacationMode\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandId\": \"string\",\n  \"deviceId\": \"string\",\n  \"type\": \"UpdateAccessCode\",\n  \"status\": \"Pending\",\n  \"errorMessage\": \"string\",\n  \"createdAt\": \"2012-12-06T15:31:45.096Z\",\n  \"completedAt\": \"1966-07-10T21:36:47.928Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ae0cb6f-6828-4b24-ad8a-29581f017827",
+              "name": "Access token missing, expired, or insufficient scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"autoLockDelaySeconds\": \"<integer>\",\n  \"vacationMode\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55f3c255-77e3-4637-a8b3-db6a9b380922",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"autoLockDelaySeconds\": \"<integer>\",\n  \"vacationMode\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50a75bf4-54ca-4e62-9e4e-c16826893d48",
+          "name": "Lock Device",
+          "request": {
+            "name": "Lock Device",
+            "description": {
+              "content": "Issue an asynchronous lock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "lock"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dba9d537-5415-4d8d-be92-d848b6ea70ca",
+              "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "lock"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandId\": \"string\",\n  \"deviceId\": \"string\",\n  \"type\": \"UpdateAccessCode\",\n  \"status\": \"Pending\",\n  \"errorMessage\": \"string\",\n  \"createdAt\": \"2012-12-06T15:31:45.096Z\",\n  \"completedAt\": \"1966-07-10T21:36:47.928Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f92fbd03-440c-4e5d-865e-27944444ec8f",
+          "name": "Unlock Device",
+          "request": {
+            "name": "Unlock Device",
+            "description": {
+              "content": "Issue an asynchronous unlock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "unlock"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b1168add-4881-4bc9-ad00-a90a5c9a2e1a",
+              "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "unlock"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandId\": \"string\",\n  \"deviceId\": \"string\",\n  \"type\": \"UpdateAccessCode\",\n  \"status\": \"Pending\",\n  \"errorMessage\": \"string\",\n  \"createdAt\": \"2012-12-06T15:31:45.096Z\",\n  \"completedAt\": \"1966-07-10T21:36:47.928Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "3947e45c-6cb1-4410-ad35-fff516110f39",
+      "name": "Access Codes",
+      "description": {
+        "content": "Create, schedule, update, and delete numeric access codes per device",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3d005a70-7b80-4fab-b014-ce981e333779",
+          "name": "List Access Codes",
+          "request": {
+            "name": "List Access Codes",
+            "description": {
+              "content": "List access codes currently stored on the device.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "access-codes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4ddfc8fe-a8af-4e23-9126-299d1985c5c5",
+              "name": "Access codes returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "access-codes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessCodes\": [\n    {\n      \"accessCodeId\": \"string\",\n      \"name\": \"lLI\",\n      \"code\": \"string\",\n      \"schedule\": {\n        \"type\": \"Always\"\n      },\n      \"accessorType\": \"string\"\n    },\n    {\n      \"accessCodeId\": \"string\",\n      \"name\": \"YUYnd\",\n      \"code\": \"string\",\n      \"schedule\": {\n        \"type\": \"Always\"\n      },\n      \"accessorType\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59e9e9fd-db43-4fa1-a440-58ed8375586c",
+          "name": "Create Access Code",
+          "request": {
+            "name": "Create Access Code",
+            "description": {
+              "content": "Create a numeric access code on the device with an Always, Temporary, or Recurring schedule. Returns 202 ACCEPTED.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "access-codes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"code\": \"<string>\",\n  \"accessCodeId\": \"<string>\",\n  \"schedule\": {\n    \"type\": \"<string>\"\n  },\n  \"accessorType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a8695356-38b2-4d9b-ba61-5922a01b5b50",
+              "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "access-codes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"code\": \"<string>\",\n  \"accessCodeId\": \"<string>\",\n  \"schedule\": {\n    \"type\": \"<string>\"\n  },\n  \"accessorType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandId\": \"string\",\n  \"deviceId\": \"string\",\n  \"type\": \"UpdateAccessCode\",\n  \"status\": \"Pending\",\n  \"errorMessage\": \"string\",\n  \"createdAt\": \"2012-12-06T15:31:45.096Z\",\n  \"completedAt\": \"1966-07-10T21:36:47.928Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54f769ff-d3f0-465d-a2bc-f9af3cc00601",
+          "name": "Get Access Code",
+          "request": {
+            "name": "Get Access Code",
+            "description": {},
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "access-codes",
+                ":accessCodeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accessCodeId",
+                  "description": "(Required) Unique identifier for an access code on a specific device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "34705fc1-9ccf-45a8-a008-5fd3c64446d2",
+              "name": "Access code returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "access-codes",
+                    ":accessCodeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accessCodeId",
+                      "description": "(Required) Unique identifier for an access code on a specific device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessCodeId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"code\": \"<string>\",\n  \"schedule\": {\n    \"type\": \"<string>\"\n  },\n  \"accessorType\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cebf5028-30e7-4146-a3d0-2169edec270f",
+          "name": "Update Access Code",
+          "request": {
+            "name": "Update Access Code",
+            "description": {
+              "content": "Update an access code name or schedule. The numeric code itself is not changed by name updates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "access-codes",
+                ":accessCodeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accessCodeId",
+                  "description": "(Required) Unique identifier for an access code on a specific device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"schedule\": {\n    \"type\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ec9cc2ff-405a-4ab9-a63d-11b2af4b1bd9",
+              "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "access-codes",
+                    ":accessCodeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accessCodeId",
+                      "description": "(Required) Unique identifier for an access code on a specific device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"schedule\": {\n    \"type\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandId\": \"string\",\n  \"deviceId\": \"string\",\n  \"type\": \"UpdateAccessCode\",\n  \"status\": \"Pending\",\n  \"errorMessage\": \"string\",\n  \"createdAt\": \"2012-12-06T15:31:45.096Z\",\n  \"completedAt\": \"1966-07-10T21:36:47.928Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68c7b7f3-ffa1-4c6d-b334-05b5792310f8",
+          "name": "Delete Access Code",
+          "request": {
+            "name": "Delete Access Code",
+            "description": {},
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "access-codes",
+                ":accessCodeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accessCodeId",
+                  "description": "(Required) Unique identifier for an access code on a specific device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "582930f1-805a-481d-9f63-252b6571a1f6",
+              "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "access-codes",
+                    ":accessCodeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accessCodeId",
+                      "description": "(Required) Unique identifier for an access code on a specific device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandId\": \"string\",\n  \"deviceId\": \"string\",\n  \"type\": \"UpdateAccessCode\",\n  \"status\": \"Pending\",\n  \"errorMessage\": \"string\",\n  \"createdAt\": \"2012-12-06T15:31:45.096Z\",\n  \"completedAt\": \"1966-07-10T21:36:47.928Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "28b30180-3cc2-497b-a1e0-bbba19280716",
+      "name": "Commands",
+      "description": {
+        "content": "Track the asynchronous status of lock / unlock and configuration commands",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e9b435d3-fa55-4460-a791-489fb2b1f52b",
+          "name": "Get Command Status",
+          "request": {
+            "name": "Get Command Status",
+            "description": {
+              "content": "Retrieve the current status of a previously issued device command. Error messages are populated on failure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "commands",
+                ":commandId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "commandId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e3d00a29-a428-47a9-97b4-662e83f51d48",
+              "name": "Command status returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "commands",
+                    ":commandId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commandId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandId\": \"string\",\n  \"deviceId\": \"string\",\n  \"type\": \"UpdateAccessCode\",\n  \"status\": \"Pending\",\n  \"errorMessage\": \"string\",\n  \"createdAt\": \"2012-12-06T15:31:45.096Z\",\n  \"completedAt\": \"1966-07-10T21:36:47.928Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1861efdf-3f8e-488d-94ee-46090f148713",
+      "name": "Webhook Subscriptions",
+      "description": {
+        "content": "Subscribe partner endpoints to device, command, access code, and account events",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "98a94c29-63c7-4b72-ad25-11b230986e12",
+          "name": "List Webhook Subscriptions",
+          "request": {
+            "name": "List Webhook Subscriptions",
+            "description": {},
+            "url": {
+              "path": [
+                "webhooks",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7dcc3e44-3f22-4922-b865-c09e5b008e17",
+              "name": "Subscriptions returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriptions\": [\n    {\n      \"subscriptionId\": \"string\",\n      \"url\": \"http://fJwfMspWeNTRMBzJNSLp.gurwv7Td9qN3CXVXAhFK0HEXpy4NFn1W.upTPWv6hCUBYQx-op.e\",\n      \"eventTypes\": [\n        \"DeviceKeypadLockedOut\",\n        \"CommandStatusUpdated\"\n      ],\n      \"signingPublicKey\": \"string\",\n      \"createdAt\": \"1971-11-17T22:02:56.638Z\"\n    },\n    {\n      \"subscriptionId\": \"string\",\n      \"url\": \"http://eDVJQ.jmmCuI,YfbAwKOTqDVdNZ2GLrIqGns,vyVcdfR67Q\",\n      \"eventTypes\": [\n        \"DeviceBatteryLevelChanged\",\n        \"DeviceBatteryLevelChanged\"\n      ],\n      \"signingPublicKey\": \"string\",\n      \"createdAt\": \"1986-01-22T16:23:33.801Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "739b9976-994e-429b-b249-ca4f06a1f39d",
+          "name": "Create Webhook Subscription",
+          "request": {
+            "name": "Create Webhook Subscription",
+            "description": {
+              "content": "Register an HTTPS callback URL for one or more event types. On subscription\ncreation an OPTIONS validation request is sent to the URL and must receive\na 2xx response within 30 seconds or the subscription is not created.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhooks",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<uri>\",\n  \"eventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6c37a68e-239a-4a61-92f4-665fea03d642",
+              "name": "Subscription created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<uri>\",\n  \"eventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriptionId\": \"string\",\n  \"url\": \"http://WkQPu.velUjPGJpX1S2NTc-\",\n  \"eventTypes\": [\n    \"IntegrationManagementUpdated\",\n    \"UserSignedOut\"\n  ],\n  \"signingPublicKey\": \"string\",\n  \"createdAt\": \"2010-10-21T18:42:15.253Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "829e4162-d7c2-4de0-87a1-c989fe69cde1",
+              "name": "Request validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<uri>\",\n  \"eventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "12f2a93c-9dff-455e-a5db-764d8b45b446",
+          "name": "Get Webhook Subscription",
+          "request": {
+            "name": "Get Webhook Subscription",
+            "description": {},
+            "url": {
+              "path": [
+                "webhooks",
+                "subscriptions",
+                ":subscriptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscriptionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f3d2f494-77c4-4745-a6c7-2427bb844838",
+              "name": "Subscription returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscriptionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriptionId\": \"string\",\n  \"url\": \"http://WkQPu.velUjPGJpX1S2NTc-\",\n  \"eventTypes\": [\n    \"IntegrationManagementUpdated\",\n    \"UserSignedOut\"\n  ],\n  \"signingPublicKey\": \"string\",\n  \"createdAt\": \"2010-10-21T18:42:15.253Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "031916af-9344-45f0-9bad-f86611a91c77",
+          "name": "Delete Webhook Subscription",
+          "request": {
+            "name": "Delete Webhook Subscription",
+            "description": {},
+            "url": {
+              "path": [
+                "webhooks",
+                "subscriptions",
+                ":subscriptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscriptionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e2a8fea0-1d07-42f3-905a-1be589a5d4f0",
+              "name": "Subscription deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscriptionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.allegion.com/schlage-home",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "devices.read devices.write access_codes.read access_codes.write webhooks.manage"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://account.schlage.com/OAuth2/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://account.schlage.com/OAuth2/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f597e355-2549-4a06-a08f-9edde8562e08",
+    "name": "Schlage Home API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Schlage Home API V2 - REST + webhook API for the Schlage Home residential\nsmart-lock platform (Schlage Encode, Encode Plus, Encode Lever).\n\nDesigned for business and commercial integrations (partner apps, smart-home\nautomation platforms) that scale across residential deployments. Uses OAuth 2.0\nAuthorization Code flow against account.schlage.com. Device management commands\nare asynchronous (202 ACCEPTED), with downstream device state surfaced via\nwebhook events.\n\nGenerated from public documentation at https://developer.allegion.com/en/products/schlage-home\n(Getting Started, Schlage Home API V2, Best Practices, Access Codes, Release Notes,\nBlog). Path naming and shapes are inferred where docs describe semantics but do\nnot publish a verbatim endpoint catalogue.\n\n\nContact Support:\n Name: Allegion Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

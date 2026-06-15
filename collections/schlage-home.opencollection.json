@@ -1,0 +1,352 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Schlage Home API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://account.schlage.com/OAuth2/authorize",
+      "accessTokenUrl": "https://account.schlage.com/OAuth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Devices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/schlage-home/devices"
+          },
+          "docs": "Returns the WiFi-enabled Schlage Home devices the authenticated user account has authorized for this integration."
+        },
+        {
+          "info": {
+            "name": "Get Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/schlage-home/devices/:deviceId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ]
+          },
+          "docs": "Returns a single device including lock state, battery level, WiFi signal strength, firmware, and connectivity state."
+        },
+        {
+          "info": {
+            "name": "Update Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.allegion.com/schlage-home/devices/:deviceId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update device configuration (name, default lock timer, vacation mode). Returns 202 ACCEPTED and emits a command that completes asynchronously."
+        },
+        {
+          "info": {
+            "name": "Lock Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.allegion.com/schlage-home/devices/:deviceId/lock",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ]
+          },
+          "docs": "Issue an asynchronous lock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook."
+        },
+        {
+          "info": {
+            "name": "Unlock Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.allegion.com/schlage-home/devices/:deviceId/unlock",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ]
+          },
+          "docs": "Issue an asynchronous unlock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Access Codes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Access Codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/schlage-home/devices/:deviceId/access-codes",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ]
+          },
+          "docs": "List access codes currently stored on the device."
+        },
+        {
+          "info": {
+            "name": "Create Access Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.allegion.com/schlage-home/devices/:deviceId/access-codes",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a numeric access code on the device with an Always, Temporary, or Recurring schedule. Returns 202 ACCEPTED."
+        },
+        {
+          "info": {
+            "name": "Get Access Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/schlage-home/devices/:deviceId/access-codes/:accessCodeId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              },
+              {
+                "name": "accessCodeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for an access code on a specific device."
+              }
+            ]
+          },
+          "docs": "Get Access Code"
+        },
+        {
+          "info": {
+            "name": "Update Access Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.allegion.com/schlage-home/devices/:deviceId/access-codes/:accessCodeId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              },
+              {
+                "name": "accessCodeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for an access code on a specific device."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an access code name or schedule. The numeric code itself is not changed by name updates."
+        },
+        {
+          "info": {
+            "name": "Delete Access Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.allegion.com/schlage-home/devices/:deviceId/access-codes/:accessCodeId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              },
+              {
+                "name": "accessCodeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for an access code on a specific device."
+              }
+            ]
+          },
+          "docs": "Delete Access Code"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Commands",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Command Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/schlage-home/devices/:deviceId/commands/:commandId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              },
+              {
+                "name": "commandId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the current status of a previously issued device command. Error messages are populated on failure."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhook Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Webhook Subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/schlage-home/webhooks/subscriptions"
+          },
+          "docs": "List Webhook Subscriptions"
+        },
+        {
+          "info": {
+            "name": "Create Webhook Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.allegion.com/schlage-home/webhooks/subscriptions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register an HTTPS callback URL for one or more event types. On subscription\ncreation an OPTIONS validation request is sent to the URL and must receive\na 2xx response within 30 seconds or the subscription is not created.\n"
+        },
+        {
+          "info": {
+            "name": "Get Webhook Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/schlage-home/webhooks/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Webhook Subscription"
+        },
+        {
+          "info": {
+            "name": "Delete Webhook Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.allegion.com/schlage-home/webhooks/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Webhook Subscription"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
