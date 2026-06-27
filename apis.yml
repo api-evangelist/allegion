@@ -39,7 +39,7 @@ common:
     url: https://developer.allegion.com
   - type: Portal
     url: https://developerapi.allegion.com
-  - type: SignIn
+  - type: Login
     url: https://developerapi.allegion.com/signin/
   - type: Documentation
     url: https://developer.allegion.com/en/documentation.html
@@ -55,10 +55,10 @@ common:
     url: https://github.com/Allegion
   - type: GitHubOrganization
     url: https://github.com/Allegion-Public
-  - type: SDK
+  - type: SDKs
     name: Allegion BLE Mobile Access SDK (iOS, Android) - private GitHub
     url: https://developer.allegion.com/en/products/schlage-mobile-credentials/mobile-sdk.html
-  - type: SDK
+  - type: SDKs
     name: Allegion Device Communication SDK (iOS, Android) - private GitHub
     url: >-
       https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
@@ -194,7 +194,7 @@ apis:
         url: https://developer.allegion.com/en/products/schlage-home/getting-started.html
       - type: BestPractices
         url: https://developer.allegion.com/en/products/schlage-home/best-practices.html
-      - type: Quickstart
+      - type: GettingStarted
         url: https://developer.allegion.com/en/products/schlage-home/getting_started_res_access_codes.html
       - type: Blog
         url: https://developer.allegion.com/en/products/schlage-home/schlage-home-api-blog.html
@@ -217,11 +217,11 @@ apis:
         url: json-schema/schlage-home-webhook-subscription-schema.json
       - type: JSONStructure
         url: json-structure/schlage-home-device-structure.json
-      - type: Example
+      - type: Examples
         url: examples/schlage-home-list-devices-example.json
-      - type: Example
+      - type: Examples
         url: examples/schlage-home-create-access-code-example.json
-      - type: Example
+      - type: Examples
         url: examples/schlage-home-webhook-subscription-example.json
   - aid: allegion:engage-credentialing-api
     name: ENGAGE Cloud Credentialing API
@@ -249,10 +249,10 @@ apis:
       - type: Tutorials
         url: >-
           https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
-      - type: SDK
+      - type: SDKs
         name: Allegion BLE Mobile Access SDK (iOS + Android, private GitHub)
         url: https://developer.allegion.com/en/products/schlage-mobile-credentials/mobile-sdk.html
-      - type: SDK
+      - type: SDKs
         name: Allegion Device Communication SDK (iOS + Android, private GitHub)
         url: >-
           https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
@@ -271,7 +271,7 @@ apis:
         url: json-schema/engage-credential-schema.json
       - type: JSONStructure
         url: json-structure/engage-credential-structure.json
-      - type: Example
+      - type: Examples
         url: examples/engage-upload-credential-example.json
-      - type: Example
+      - type: Examples
         url: examples/engage-list-credentials-example.json

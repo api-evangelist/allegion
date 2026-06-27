@@ -3,19 +3,12 @@
   "feeds": [
     {
       "source": "https://developer.allegion.com/en/products/schlage-home/schlage-home-api-blog.html",
-      "feed_url": "https://developer.allegion.com/en/products/schlage-home/schlage-home-api-blog.html",
-      "title": "",
+      "feed_url": "",
       "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://developer.allegion.com/en/products/schlage-home/getting_started_res_access_codes.html",
-      "feed_url": "https://developer.allegion.com/en/products/schlage-home/getting_started_res_access_codes.html",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "method": "agent-scrape"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:21:19Z",
+  "agent_pulled": "2026-06-27"
 }
