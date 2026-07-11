@@ -1,0 +1,41 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/schlage-home-openapi.yml
+schemes:
+- name: OAuth2
+  source: openapi/schlage-home-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://account.schlage.com/OAuth2/authorize
+    tokenUrl: https://account.schlage.com/OAuth2/token
+scopes:
+- scope: access_codes.read
+  description: Read access codes stored on devices
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/schlage-home-openapi.yml
+- scope: access_codes.write
+  description: Create, update, and delete access codes
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/schlage-home-openapi.yml
+- scope: devices.read
+  description: Read device state, battery, connectivity, and firmware
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/schlage-home-openapi.yml
+- scope: devices.write
+  description: Issue lock, unlock, and configuration commands
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/schlage-home-openapi.yml
+- scope: webhooks.manage
+  description: Create, list, and delete webhook subscriptions
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/schlage-home-openapi.yml

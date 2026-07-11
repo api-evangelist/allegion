@@ -35,6 +35,8 @@ maintainers:
   - FN: Allegion Developer Support
     url: https://developersupport.allegion.com/hc/en-us
 common:
+  - type: OAuthScopes
+    url: scopes/allegion-scopes.yml
   - type: DeveloperPortal
     url: https://developer.allegion.com
   - type: Portal
