@@ -1,0 +1,35 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/engage-credentialing-openapi.yml, openapi/schlage-home-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: SubscriptionKey
+  type: apiKey
+  in: header
+  parameter: alle-subscription-key
+  description: Azure API Management subscription key issued via the Allegion Developer Portal.
+  sources:
+  - openapi/engage-credentialing-openapi.yml
+- name: BasicAuth
+  type: http
+  scheme: basic
+  description: Basic Auth token generated from ENGAGE credentials.
+  sources:
+  - openapi/engage-credentialing-openapi.yml
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://account.schlage.com/OAuth2/authorize
+    tokenUrl: https://account.schlage.com/OAuth2/token
+    scopes: 5
+  sources:
+  - openapi/schlage-home-openapi.yml

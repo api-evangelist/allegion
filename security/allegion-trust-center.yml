@@ -1,0 +1,12 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://trust.allegion.com/
+url: https://trust.allegion.com/
+certifications:
+- SOC 2
+evidence:
+- source: https://trust.allegion.com/
+  keywords:
+  - soc 2
+  - trust center

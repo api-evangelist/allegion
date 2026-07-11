@@ -35,6 +35,14 @@ maintainers:
   - FN: Allegion Developer Support
     url: https://developersupport.allegion.com/hc/en-us
 common:
+  - type: TrustCenter
+    url: security/allegion-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/allegion-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/allegion-domain-security.yml
+  - type: Authentication
+    url: authentication/allegion-authentication.yml
   - type: OAuthScopes
     url: scopes/allegion-scopes.yml
   - type: DeveloperPortal
