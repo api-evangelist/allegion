@@ -35,6 +35,8 @@ maintainers:
   - FN: Allegion Developer Support
     url: https://developersupport.allegion.com/hc/en-us
 common:
+  - type: AgenticAccess
+    url: agentic-access/allegion-agentic-access.yml
   - type: TrustCenter
     url: security/allegion-trust-center.yml
   - type: VulnerabilityDisclosure
