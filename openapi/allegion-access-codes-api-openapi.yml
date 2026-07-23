@@ -1,0 +1,298 @@
+openapi: 3.0.3
+info:
+  title: ENGAGE Cloud Credentialing Access Codes API
+  version: '1.0'
+  description: 'REST API hosted on the Allegion Device Management and Mobile Access Cloud
+
+    (Engage Cloud) for managing BLE Mobile Credentials that unlock ENGAGE Gen 2
+
+    Schlage hardware (Control B, NDEB, LEBMS/LEBMD locks; MTKB readers) and
+
+    Von Duprin RU/RM exit devices.
+
+
+    The Credentialing API performs functions to upload, delete, and get active
+
+    lists of mobile credentials through the API, and is used by an Access
+
+    Management Platform / Access Control System (ACS) to issue credentials that
+
+    the Allegion BLE Mobile Access SDK then presents to hardware over Bluetooth.
+
+
+    Authentication requires an `alle-subscription-key` header plus a Basic Auth
+
+    token generated from ENGAGE credentials. Integrators must sign the Allegion
+
+    Security Token Agreement before being granted access to the API or to the
+
+    private GitHub repositories that contain the iOS and Android SDKs.
+
+
+    Generated from public documentation at
+
+    https://developer.allegion.com/en/products/schlage-mobile-credentials.
+
+    Path naming is inferred from documented capability descriptions.
+
+    '
+  contact:
+    name: Allegion Developer Support
+    url: https://developersupport.allegion.com/hc/en-us
+  termsOfService: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+servers:
+- url: https://api.allegion.com/engage
+  description: Production
+security:
+- SubscriptionKey: []
+  BasicAuth: []
+tags:
+- name: Access Codes
+  description: Create, schedule, update, and delete numeric access codes per device
+paths:
+  /devices/{deviceId}/access-codes:
+    get:
+      tags:
+      - Access Codes
+      summary: List Access Codes
+      description: List access codes currently stored on the device.
+      operationId: listAccessCodes
+      parameters:
+      - $ref: '#/components/parameters/DeviceId'
+      responses:
+        '200':
+          description: Access codes returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessCodes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AccessCode'
+    post:
+      tags:
+      - Access Codes
+      summary: Create Access Code
+      description: Create a numeric access code on the device with an Always, Temporary, or Recurring schedule. Returns 202 ACCEPTED.
+      operationId: createAccessCode
+      parameters:
+      - $ref: '#/components/parameters/DeviceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessCodeCreate'
+      responses:
+        '202':
+          $ref: '#/components/responses/CommandAccepted'
+  /devices/{deviceId}/access-codes/{accessCodeId}:
+    get:
+      tags:
+      - Access Codes
+      summary: Get Access Code
+      operationId: getAccessCode
+      parameters:
+      - $ref: '#/components/parameters/DeviceId'
+      - $ref: '#/components/parameters/AccessCodeId'
+      responses:
+        '200':
+          description: Access code returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessCode'
+    put:
+      tags:
+      - Access Codes
+      summary: Update Access Code
+      description: Update an access code name or schedule. The numeric code itself is not changed by name updates.
+      operationId: updateAccessCode
+      parameters:
+      - $ref: '#/components/parameters/DeviceId'
+      - $ref: '#/components/parameters/AccessCodeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessCodeUpdate'
+      responses:
+        '202':
+          $ref: '#/components/responses/CommandAccepted'
+    delete:
+      tags:
+      - Access Codes
+      summary: Delete Access Code
+      operationId: deleteAccessCode
+      parameters:
+      - $ref: '#/components/parameters/DeviceId'
+      - $ref: '#/components/parameters/AccessCodeId'
+      responses:
+        '202':
+          $ref: '#/components/responses/CommandAccepted'
+components:
+  schemas:
+    TemporarySchedule:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Temporary
+        startDateTime:
+          type: string
+          format: date-time
+          description: Includes DST offset since April 14, 2026.
+        endDateTime:
+          type: string
+          format: date-time
+          description: Includes DST offset since April 14, 2026.
+    AccessCode:
+      type: object
+      properties:
+        accessCodeId:
+          type: string
+        name:
+          type: string
+          minLength: 1
+          maxLength: 12
+          pattern: ^[a-zA-Z0-9]+$
+          description: 1-12 character alpha-numeric label. Updating the name does not change the numeric code.
+        code:
+          type: string
+          description: Numeric access code (length is per-device, changed by deleting all codes).
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        accessorType:
+          type: string
+          description: Accessor classification (Owner, Guest, etc.). New accessor types added March 25, 2025.
+    AccessCodeCreate:
+      allOf:
+      - $ref: '#/components/schemas/AccessCode'
+      required:
+      - name
+      - code
+    AccessCodeUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 12
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+    AlwaysSchedule:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Always
+    RecurringSchedule:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Recurring
+        daysOfWeek:
+          type: array
+          items:
+            type: string
+            enum:
+            - Monday
+            - Tuesday
+            - Wednesday
+            - Thursday
+            - Friday
+            - Saturday
+            - Sunday
+        startTime:
+          type: string
+          example: 08:00
+        endTime:
+          type: string
+          example: '17:00'
+    Command:
+      type: object
+      properties:
+        commandId:
+          type: string
+        deviceId:
+          type: string
+        type:
+          type: string
+          enum:
+          - Lock
+          - Unlock
+          - UpdateDevice
+          - CreateAccessCode
+          - UpdateAccessCode
+          - DeleteAccessCode
+        status:
+          type: string
+          enum:
+          - Pending
+          - InProgress
+          - Completed
+          - Failed
+        errorMessage:
+          type: string
+          description: Populated when status is Failed (improved March 6, 2025).
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+    Schedule:
+      oneOf:
+      - $ref: '#/components/schemas/AlwaysSchedule'
+      - $ref: '#/components/schemas/TemporarySchedule'
+      - $ref: '#/components/schemas/RecurringSchedule'
+      discriminator:
+        propertyName: type
+        mapping:
+          Always: '#/components/schemas/AlwaysSchedule'
+          Temporary: '#/components/schemas/TemporarySchedule'
+          Recurring: '#/components/schemas/RecurringSchedule'
+  parameters:
+    AccessCodeId:
+      in: path
+      name: accessCodeId
+      required: true
+      schema:
+        type: string
+      description: Unique identifier for an access code on a specific device.
+    DeviceId:
+      in: path
+      name: deviceId
+      required: true
+      schema:
+        type: string
+      description: Unique identifier for a Schlage Home device.
+  responses:
+    CommandAccepted:
+      description: 'Asynchronous command accepted. The response includes a commandId that can
+
+        be polled at GET /devices/{deviceId}/commands/{commandId} or watched for
+
+        via the corresponding command-status webhook event.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Command'
+  securitySchemes:
+    SubscriptionKey:
+      type: apiKey
+      in: header
+      name: alle-subscription-key
+      description: Azure API Management subscription key issued via the Allegion Developer Portal.
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: Basic Auth token generated from ENGAGE credentials.

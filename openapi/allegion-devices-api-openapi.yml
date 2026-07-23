@@ -1,0 +1,291 @@
+openapi: 3.0.3
+info:
+  title: ENGAGE Cloud Credentialing Access Codes Devices API
+  version: '1.0'
+  description: 'REST API hosted on the Allegion Device Management and Mobile Access Cloud
+
+    (Engage Cloud) for managing BLE Mobile Credentials that unlock ENGAGE Gen 2
+
+    Schlage hardware (Control B, NDEB, LEBMS/LEBMD locks; MTKB readers) and
+
+    Von Duprin RU/RM exit devices.
+
+
+    The Credentialing API performs functions to upload, delete, and get active
+
+    lists of mobile credentials through the API, and is used by an Access
+
+    Management Platform / Access Control System (ACS) to issue credentials that
+
+    the Allegion BLE Mobile Access SDK then presents to hardware over Bluetooth.
+
+
+    Authentication requires an `alle-subscription-key` header plus a Basic Auth
+
+    token generated from ENGAGE credentials. Integrators must sign the Allegion
+
+    Security Token Agreement before being granted access to the API or to the
+
+    private GitHub repositories that contain the iOS and Android SDKs.
+
+
+    Generated from public documentation at
+
+    https://developer.allegion.com/en/products/schlage-mobile-credentials.
+
+    Path naming is inferred from documented capability descriptions.
+
+    '
+  contact:
+    name: Allegion Developer Support
+    url: https://developersupport.allegion.com/hc/en-us
+  termsOfService: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+servers:
+- url: https://api.allegion.com/engage
+  description: Production
+security:
+- SubscriptionKey: []
+  BasicAuth: []
+tags:
+- name: Devices
+  description: ENGAGE hardware discovery and commissioning (Allegion Device Communication SDK)
+paths:
+  /devices:
+    get:
+      tags:
+      - Devices
+      summary: List ENGAGE Devices
+      description: List ENGAGE hardware enrolled in the integrator's tenant. Surfaces the inputs the Allegion Device Communication SDK uses for commissioning.
+      operationId: listEngageDevices
+      responses:
+        '200':
+          description: Devices returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  devices:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EngageDevice'
+  /devices/{deviceId}:
+    get:
+      tags:
+      - Devices
+      summary: Get Device
+      description: Returns a single device including lock state, battery level, WiFi signal strength, firmware, and connectivity state.
+      operationId: getDevice
+      parameters:
+      - $ref: '#/components/parameters/DeviceId'
+      responses:
+        '200':
+          description: Device returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+      - Devices
+      summary: Update Device
+      description: Update device configuration (name, default lock timer, vacation mode). Returns 202 ACCEPTED and emits a command that completes asynchronously.
+      operationId: updateDevice
+      parameters:
+      - $ref: '#/components/parameters/DeviceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceUpdate'
+      responses:
+        '202':
+          $ref: '#/components/responses/CommandAccepted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /devices/{deviceId}/lock:
+    post:
+      tags:
+      - Devices
+      summary: Lock Device
+      description: Issue an asynchronous lock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook.
+      operationId: lockDevice
+      parameters:
+      - $ref: '#/components/parameters/DeviceId'
+      responses:
+        '202':
+          $ref: '#/components/responses/CommandAccepted'
+  /devices/{deviceId}/unlock:
+    post:
+      tags:
+      - Devices
+      summary: Unlock Device
+      description: Issue an asynchronous unlock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook.
+      operationId: unlockDevice
+      parameters:
+      - $ref: '#/components/parameters/DeviceId'
+      responses:
+        '202':
+          $ref: '#/components/responses/CommandAccepted'
+components:
+  schemas:
+    EngageDevice:
+      type: object
+      properties:
+        deviceId:
+          type: string
+        name:
+          type: string
+        model:
+          type: string
+          enum:
+          - BE467B
+          - FE410B
+          - NDEB
+          - LEBMS
+          - LEBMD
+          - MTKB
+          - XE360
+          - CTE
+          - VonDuprinRU
+          - VonDuprinRM
+        firmwareVersion:
+          type: string
+        siteId:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+    DeviceUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        autoLockDelaySeconds:
+          type: integer
+        vacationMode:
+          type: boolean
+    Device:
+      type: object
+      properties:
+        deviceId:
+          type: string
+        name:
+          type: string
+        model:
+          type: string
+          enum:
+          - BE489WB
+          - BE499WB
+          - FE789WB
+          description: Schlage Encode Deadbolt, Encode Plus, or Encode Lever
+        firmwareVersion:
+          type: string
+        batteryLevel:
+          type: integer
+          minimum: 0
+          maximum: 100
+        wifiSignalStrength:
+          type: integer
+          description: WiFi RSSI in dBm (added March 6, 2025).
+        connectivityState:
+          type: string
+          enum:
+          - Online
+          - Offline
+        lockState:
+          type: string
+          enum:
+          - Locked
+          - Unlocked
+          - Unknown
+        timeZone:
+          type: string
+    Command:
+      type: object
+      properties:
+        commandId:
+          type: string
+        deviceId:
+          type: string
+        type:
+          type: string
+          enum:
+          - Lock
+          - Unlock
+          - UpdateDevice
+          - CreateAccessCode
+          - UpdateAccessCode
+          - DeleteAccessCode
+        status:
+          type: string
+          enum:
+          - Pending
+          - InProgress
+          - Completed
+          - Failed
+        errorMessage:
+          type: string
+          description: Populated when status is Failed (improved March 6, 2025).
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Access token missing, expired, or insufficient scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    CommandAccepted:
+      description: 'Asynchronous command accepted. The response includes a commandId that can
+
+        be polled at GET /devices/{deviceId}/commands/{commandId} or watched for
+
+        via the corresponding command-status webhook event.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Command'
+  parameters:
+    DeviceId:
+      in: path
+      name: deviceId
+      required: true
+      schema:
+        type: string
+      description: Unique identifier for a Schlage Home device.
+  securitySchemes:
+    SubscriptionKey:
+      type: apiKey
+      in: header
+      name: alle-subscription-key
+      description: Azure API Management subscription key issued via the Allegion Developer Portal.
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: Basic Auth token generated from ENGAGE credentials.

@@ -1,0 +1,205 @@
+openapi: 3.0.3
+info:
+  title: ENGAGE Cloud Credentialing Access Codes Webhook Subscriptions API
+  version: '1.0'
+  description: 'REST API hosted on the Allegion Device Management and Mobile Access Cloud
+
+    (Engage Cloud) for managing BLE Mobile Credentials that unlock ENGAGE Gen 2
+
+    Schlage hardware (Control B, NDEB, LEBMS/LEBMD locks; MTKB readers) and
+
+    Von Duprin RU/RM exit devices.
+
+
+    The Credentialing API performs functions to upload, delete, and get active
+
+    lists of mobile credentials through the API, and is used by an Access
+
+    Management Platform / Access Control System (ACS) to issue credentials that
+
+    the Allegion BLE Mobile Access SDK then presents to hardware over Bluetooth.
+
+
+    Authentication requires an `alle-subscription-key` header plus a Basic Auth
+
+    token generated from ENGAGE credentials. Integrators must sign the Allegion
+
+    Security Token Agreement before being granted access to the API or to the
+
+    private GitHub repositories that contain the iOS and Android SDKs.
+
+
+    Generated from public documentation at
+
+    https://developer.allegion.com/en/products/schlage-mobile-credentials.
+
+    Path naming is inferred from documented capability descriptions.
+
+    '
+  contact:
+    name: Allegion Developer Support
+    url: https://developersupport.allegion.com/hc/en-us
+  termsOfService: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+servers:
+- url: https://api.allegion.com/engage
+  description: Production
+security:
+- SubscriptionKey: []
+  BasicAuth: []
+tags:
+- name: Webhook Subscriptions
+  description: Subscribe partner endpoints to device, command, access code, and account events
+paths:
+  /webhooks/subscriptions:
+    get:
+      tags:
+      - Webhook Subscriptions
+      summary: List Webhook Subscriptions
+      operationId: listWebhookSubscriptions
+      responses:
+        '200':
+          description: Subscriptions returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriptions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WebhookSubscription'
+    post:
+      tags:
+      - Webhook Subscriptions
+      summary: Create Webhook Subscription
+      description: 'Register an HTTPS callback URL for one or more event types. On subscription
+
+        creation an OPTIONS validation request is sent to the URL and must receive
+
+        a 2xx response within 30 seconds or the subscription is not created.
+
+        '
+      operationId: createWebhookSubscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriptionCreate'
+      responses:
+        '201':
+          description: Subscription created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscription'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /webhooks/subscriptions/{subscriptionId}:
+    get:
+      tags:
+      - Webhook Subscriptions
+      summary: Get Webhook Subscription
+      operationId: getWebhookSubscription
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Subscription returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscription'
+    delete:
+      tags:
+      - Webhook Subscriptions
+      summary: Delete Webhook Subscription
+      operationId: deleteWebhookSubscription
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Subscription deleted
+components:
+  responses:
+    BadRequest:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+    WebhookSubscription:
+      type: object
+      properties:
+        subscriptionId:
+          type: string
+        url:
+          type: string
+          format: uri
+          description: HTTPS-only callback URL.
+        eventTypes:
+          type: array
+          items:
+            type: string
+            enum:
+            - DeviceLockStateChanged
+            - DeviceConnectivityStateChanged
+            - DeviceBatteryLevelChanged
+            - DeviceKeypadLockedOut
+            - DeviceAlarmTriggered
+            - AccessCodeCreated
+            - AccessCodeUpdated
+            - AccessCodeDeleted
+            - AccessCodeUsed
+            - InvalidAccessCodeAttempted
+            - AccessCodeSynchronized
+            - CommandStatusUpdated
+            - UserSignedOut
+            - IntegrationManagementUpdated
+        signingPublicKey:
+          type: string
+          description: Public key used to verify webhook signatures.
+        createdAt:
+          type: string
+          format: date-time
+    WebhookSubscriptionCreate:
+      type: object
+      required:
+      - url
+      - eventTypes
+      properties:
+        url:
+          type: string
+          format: uri
+        eventTypes:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    SubscriptionKey:
+      type: apiKey
+      in: header
+      name: alle-subscription-key
+      description: Azure API Management subscription key issued via the Allegion Developer Portal.
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: Basic Auth token generated from ENGAGE credentials.

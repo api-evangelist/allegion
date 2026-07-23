@@ -1,0 +1,125 @@
+openapi: 3.0.3
+info:
+  title: ENGAGE Cloud Credentialing Access Codes Commands API
+  version: '1.0'
+  description: 'REST API hosted on the Allegion Device Management and Mobile Access Cloud
+
+    (Engage Cloud) for managing BLE Mobile Credentials that unlock ENGAGE Gen 2
+
+    Schlage hardware (Control B, NDEB, LEBMS/LEBMD locks; MTKB readers) and
+
+    Von Duprin RU/RM exit devices.
+
+
+    The Credentialing API performs functions to upload, delete, and get active
+
+    lists of mobile credentials through the API, and is used by an Access
+
+    Management Platform / Access Control System (ACS) to issue credentials that
+
+    the Allegion BLE Mobile Access SDK then presents to hardware over Bluetooth.
+
+
+    Authentication requires an `alle-subscription-key` header plus a Basic Auth
+
+    token generated from ENGAGE credentials. Integrators must sign the Allegion
+
+    Security Token Agreement before being granted access to the API or to the
+
+    private GitHub repositories that contain the iOS and Android SDKs.
+
+
+    Generated from public documentation at
+
+    https://developer.allegion.com/en/products/schlage-mobile-credentials.
+
+    Path naming is inferred from documented capability descriptions.
+
+    '
+  contact:
+    name: Allegion Developer Support
+    url: https://developersupport.allegion.com/hc/en-us
+  termsOfService: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+servers:
+- url: https://api.allegion.com/engage
+  description: Production
+security:
+- SubscriptionKey: []
+  BasicAuth: []
+tags:
+- name: Commands
+  description: Track the asynchronous status of lock / unlock and configuration commands
+paths:
+  /devices/{deviceId}/commands/{commandId}:
+    get:
+      tags:
+      - Commands
+      summary: Get Command Status
+      description: Retrieve the current status of a previously issued device command. Error messages are populated on failure.
+      operationId: getCommand
+      parameters:
+      - $ref: '#/components/parameters/DeviceId'
+      - in: path
+        name: commandId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Command status returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Command'
+components:
+  schemas:
+    Command:
+      type: object
+      properties:
+        commandId:
+          type: string
+        deviceId:
+          type: string
+        type:
+          type: string
+          enum:
+          - Lock
+          - Unlock
+          - UpdateDevice
+          - CreateAccessCode
+          - UpdateAccessCode
+          - DeleteAccessCode
+        status:
+          type: string
+          enum:
+          - Pending
+          - InProgress
+          - Completed
+          - Failed
+        errorMessage:
+          type: string
+          description: Populated when status is Failed (improved March 6, 2025).
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+  parameters:
+    DeviceId:
+      in: path
+      name: deviceId
+      required: true
+      schema:
+        type: string
+      description: Unique identifier for a Schlage Home device.
+  securitySchemes:
+    SubscriptionKey:
+      type: apiKey
+      in: header
+      name: alle-subscription-key
+      description: Azure API Management subscription key issued via the Allegion Developer Portal.
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: Basic Auth token generated from ENGAGE credentials.
