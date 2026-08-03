@@ -1,0 +1,22 @@
+{
+  "provider": "allegion",
+  "sources": [
+    "allegion-access-codes-api-openapi.yml",
+    "allegion-commands-api-openapi.yml",
+    "allegion-devices-api-openapi.yml",
+    "allegion-mobile-credentials-api-openapi.yml",
+    "allegion-webhook-subscriptions-api-openapi.yml"
+  ],
+  "outputs": [
+    "allegion-access-codes-api-openapi.yml",
+    "allegion-commands-api-openapi.yml",
+    "allegion-devices-api-openapi.yml",
+    "allegion-mobile-credentials-api-openapi.yml",
+    "allegion-webhook-subscriptions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

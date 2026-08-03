@@ -1,0 +1,465 @@
+{
+  "info": {
+    "_postman_id": "57165fee-fc60-4c1f-a3b8-7f7207ece40d",
+    "name": "ENGAGE Cloud Credentialing Access Codes Webhook Subscriptions API",
+    "description": "REST API hosted on the Allegion Device Management and Mobile Access Cloud\n(Engage Cloud) for managing BLE Mobile Credentials that unlock ENGAGE Gen 2\nSchlage hardware (Control B, NDEB, LEBMS/LEBMD locks; MTKB readers) and\nVon Duprin RU/RM exit devices.\n\nThe Credentialing API performs functions to upload, delete, and get active\nlists of mobile credentials through the API, and is used by an Access\nManagement Platform / Access Control System (ACS) to issue credentials that\nthe Allegion BLE Mobile Access SDK then presents to hardware over Bluetooth.\n\nAuthentication requires an `alle-subscription-key` header plus a Basic Auth\ntoken generated from ENGAGE credentials. Integrators must sign the Allegion\nSecurity Token Agreement before being granted access to the API or to the\nprivate GitHub repositories that contain the iOS and Android SDKs.\n\nGenerated from public documentation at\nhttps://developer.allegion.com/en/products/schlage-mobile-credentials.\nPath naming is inferred from documented capability descriptions.\n\n\nContact Support:\n Name: Allegion Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T00:29:33.000Z",
+    "updatedAt": "2026-07-28T00:29:33.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-57165fee-fc60-4c1f-a3b8-7f7207ece40d"
+  },
+  "item": [
+    {
+      "name": "webhooks",
+      "item": [
+        {
+          "name": "subscriptions",
+          "item": [
+            {
+              "name": "{subscriptionId}",
+              "item": [
+                {
+                  "name": "Get Webhook Subscription",
+                  "id": "6735c2a0-626e-4793-9099-56e97952245c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhooks/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhooks",
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "bdf5223b-eac5-4ce2-9ce6-54b5172c9f59",
+                          "key": "subscriptionId",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "7d4b6714-a061-4e23-98bf-fb0d32a3e14e",
+                      "name": "Subscription returned",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "alle-subscription-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/webhooks/subscriptions/:subscriptionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "webhooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"subscriptionId\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"eventTypes\": [\n    \"AccessCodeUsed\",\n    \"DeviceKeypadLockedOut\"\n  ],\n  \"signingPublicKey\": \"<string>\",\n  \"createdAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-07-28T00:29:33.000Z",
+                      "updatedAt": "2026-07-28T00:29:33.000Z",
+                      "uid": "35240-7d4b6714-a061-4e23-98bf-fb0d32a3e14e"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T00:29:33.000Z",
+                  "updatedAt": "2026-07-28T00:29:33.000Z",
+                  "uid": "35240-6735c2a0-626e-4793-9099-56e97952245c"
+                },
+                {
+                  "name": "Delete Webhook Subscription",
+                  "id": "3302ac33-729f-4ba8-8c56-1ba5b160bdb4",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhooks/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhooks",
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "fd471e11-ffcd-493f-b7dc-cfdb90ade64b",
+                          "key": "subscriptionId",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "623e25ad-bae0-4de2-83a5-045da20e6de5",
+                      "name": "Subscription deleted",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "alle-subscription-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/webhooks/subscriptions/:subscriptionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "webhooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T00:29:33.000Z",
+                      "updatedAt": "2026-07-28T00:29:33.000Z",
+                      "uid": "35240-623e25ad-bae0-4de2-83a5-045da20e6de5"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T00:29:33.000Z",
+                  "updatedAt": "2026-07-28T00:29:33.000Z",
+                  "uid": "35240-3302ac33-729f-4ba8-8c56-1ba5b160bdb4"
+                }
+              ],
+              "id": "c6cf5bd3-6638-404f-a853-42af64fba50a",
+              "createdAt": "2026-07-28T00:29:33.000Z",
+              "updatedAt": "2026-07-28T00:29:33.000Z",
+              "uid": "35240-c6cf5bd3-6638-404f-a853-42af64fba50a"
+            },
+            {
+              "name": "List Webhook Subscriptions",
+              "id": "b7d85a05-7564-40ea-8ac0-3ae0e3582fb0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/webhooks/subscriptions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "webhooks",
+                    "subscriptions"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "d4a581e5-8339-4517-a587-6d7003f79852",
+                  "name": "Subscriptions returned",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "alle-subscription-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhooks/subscriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhooks",
+                        "subscriptions"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"subscriptions\": [\n    {\n      \"subscriptionId\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"eventTypes\": [\n        \"InvalidAccessCodeAttempted\",\n        \"AccessCodeDeleted\"\n      ],\n      \"signingPublicKey\": \"<string>\",\n      \"createdAt\": \"<dateTime>\"\n    },\n    {\n      \"subscriptionId\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"eventTypes\": [\n        \"IntegrationManagementUpdated\",\n        \"DeviceKeypadLockedOut\"\n      ],\n      \"signingPublicKey\": \"<string>\",\n      \"createdAt\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T00:29:33.000Z",
+                  "updatedAt": "2026-07-28T00:29:33.000Z",
+                  "uid": "35240-d4a581e5-8339-4517-a587-6d7003f79852"
+                }
+              ],
+              "createdAt": "2026-07-28T00:29:33.000Z",
+              "updatedAt": "2026-07-28T00:29:33.000Z",
+              "uid": "35240-b7d85a05-7564-40ea-8ac0-3ae0e3582fb0"
+            },
+            {
+              "name": "Create Webhook Subscription",
+              "id": "a8ef0807-b98e-4b85-bac9-dafd8f507136",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<uri>\",\n  \"eventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/webhooks/subscriptions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "webhooks",
+                    "subscriptions"
+                  ]
+                },
+                "description": "Register an HTTPS callback URL for one or more event types. On subscription\ncreation an OPTIONS validation request is sent to the URL and must receive\na 2xx response within 30 seconds or the subscription is not created.\n"
+              },
+              "response": [
+                {
+                  "id": "b71d748d-e607-40e5-af7b-b4f98e96d796",
+                  "name": "Subscription created",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "alle-subscription-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"url\": \"<uri>\",\n  \"eventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhooks/subscriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhooks",
+                        "subscriptions"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"subscriptionId\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"eventTypes\": [\n    \"AccessCodeUsed\",\n    \"DeviceKeypadLockedOut\"\n  ],\n  \"signingPublicKey\": \"<string>\",\n  \"createdAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-07-28T00:29:33.000Z",
+                  "updatedAt": "2026-07-28T00:29:33.000Z",
+                  "uid": "35240-b71d748d-e607-40e5-af7b-b4f98e96d796"
+                },
+                {
+                  "id": "63164ab1-36b4-4558-b962-a3a45c827393",
+                  "name": "Request validation failed.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "alle-subscription-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"url\": \"<uri>\",\n  \"eventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhooks/subscriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhooks",
+                        "subscriptions"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T00:29:33.000Z",
+                  "updatedAt": "2026-07-28T00:29:33.000Z",
+                  "uid": "35240-63164ab1-36b4-4558-b962-a3a45c827393"
+                }
+              ],
+              "createdAt": "2026-07-28T00:29:33.000Z",
+              "updatedAt": "2026-07-28T00:29:33.000Z",
+              "uid": "35240-a8ef0807-b98e-4b85-bac9-dafd8f507136"
+            }
+          ],
+          "id": "1c194295-735d-45f4-9358-d53c27445721",
+          "createdAt": "2026-07-28T00:29:33.000Z",
+          "updatedAt": "2026-07-28T00:29:33.000Z",
+          "uid": "35240-1c194295-735d-45f4-9358-d53c27445721"
+        }
+      ],
+      "id": "f12329fb-49ff-4f70-bb5f-0eabfe22c54e",
+      "createdAt": "2026-07-28T00:29:33.000Z",
+      "updatedAt": "2026-07-28T00:29:33.000Z",
+      "uid": "35240-f12329fb-49ff-4f70-bb5f-0eabfe22c54e"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "alle-subscription-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.allegion.com/engage"
+    }
+  ]
+}

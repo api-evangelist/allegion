@@ -1,0 +1,753 @@
+{
+  "info": {
+    "_postman_id": "14b971bf-0830-4d10-a72a-992a07adc2e3",
+    "name": "ENGAGE Cloud Credentialing Access Codes Devices API",
+    "description": "REST API hosted on the Allegion Device Management and Mobile Access Cloud\n(Engage Cloud) for managing BLE Mobile Credentials that unlock ENGAGE Gen 2\nSchlage hardware (Control B, NDEB, LEBMS/LEBMD locks; MTKB readers) and\nVon Duprin RU/RM exit devices.\n\nThe Credentialing API performs functions to upload, delete, and get active\nlists of mobile credentials through the API, and is used by an Access\nManagement Platform / Access Control System (ACS) to issue credentials that\nthe Allegion BLE Mobile Access SDK then presents to hardware over Bluetooth.\n\nAuthentication requires an `alle-subscription-key` header plus a Basic Auth\ntoken generated from ENGAGE credentials. Integrators must sign the Allegion\nSecurity Token Agreement before being granted access to the API or to the\nprivate GitHub repositories that contain the iOS and Android SDKs.\n\nGenerated from public documentation at\nhttps://developer.allegion.com/en/products/schlage-mobile-credentials.\nPath naming is inferred from documented capability descriptions.\n\n\nContact Support:\n Name: Allegion Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T00:29:31.000Z",
+    "updatedAt": "2026-07-28T00:29:31.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-14b971bf-0830-4d10-a72a-992a07adc2e3"
+  },
+  "item": [
+    {
+      "name": "devices",
+      "item": [
+        {
+          "name": "{deviceId}",
+          "item": [
+            {
+              "name": "lock",
+              "item": [
+                {
+                  "name": "Lock Device",
+                  "id": "9701e73c-5437-49a1-8511-b0cd1b721b35",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/devices/:deviceId/lock",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "devices",
+                        ":deviceId",
+                        "lock"
+                      ],
+                      "variable": [
+                        {
+                          "id": "72d9a57d-06d2-44a8-a2a8-24b206362bb1",
+                          "key": "deviceId",
+                          "value": "<string>",
+                          "description": "(Required) Unique identifier for a Schlage Home device."
+                        }
+                      ]
+                    },
+                    "description": "Issue an asynchronous lock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook."
+                  },
+                  "response": [
+                    {
+                      "id": "43c29767-4e21-4379-a2b1-edf3dc05ca4b",
+                      "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "alle-subscription-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/devices/:deviceId/lock",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "devices",
+                            ":deviceId",
+                            "lock"
+                          ],
+                          "variable": [
+                            {
+                              "key": "deviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Accepted",
+                      "code": 202,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"commandId\": \"<string>\",\n  \"deviceId\": \"<string>\",\n  \"type\": \"UpdateAccessCode\",\n  \"status\": \"InProgress\",\n  \"errorMessage\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"completedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-07-28T00:29:31.000Z",
+                      "updatedAt": "2026-07-28T00:29:31.000Z",
+                      "uid": "35240-43c29767-4e21-4379-a2b1-edf3dc05ca4b"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T00:29:31.000Z",
+                  "updatedAt": "2026-07-28T00:29:31.000Z",
+                  "uid": "35240-9701e73c-5437-49a1-8511-b0cd1b721b35"
+                }
+              ],
+              "id": "7525f186-f985-4b8d-abb7-a68f19c69a7c",
+              "createdAt": "2026-07-28T00:29:31.000Z",
+              "updatedAt": "2026-07-28T00:29:31.000Z",
+              "uid": "35240-7525f186-f985-4b8d-abb7-a68f19c69a7c"
+            },
+            {
+              "name": "unlock",
+              "item": [
+                {
+                  "name": "Unlock Device",
+                  "id": "ee49cc40-228c-4dd5-a1ef-a0f183887067",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/devices/:deviceId/unlock",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "devices",
+                        ":deviceId",
+                        "unlock"
+                      ],
+                      "variable": [
+                        {
+                          "id": "1400589b-bcd7-4834-a18a-f897c8e225c9",
+                          "key": "deviceId",
+                          "value": "<string>",
+                          "description": "(Required) Unique identifier for a Schlage Home device."
+                        }
+                      ]
+                    },
+                    "description": "Issue an asynchronous unlock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook."
+                  },
+                  "response": [
+                    {
+                      "id": "2ae28f03-60e2-4831-83ad-60af16ba9ae4",
+                      "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "alle-subscription-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/devices/:deviceId/unlock",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "devices",
+                            ":deviceId",
+                            "unlock"
+                          ],
+                          "variable": [
+                            {
+                              "key": "deviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Accepted",
+                      "code": 202,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"commandId\": \"<string>\",\n  \"deviceId\": \"<string>\",\n  \"type\": \"UpdateAccessCode\",\n  \"status\": \"InProgress\",\n  \"errorMessage\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"completedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-07-28T00:29:31.000Z",
+                      "updatedAt": "2026-07-28T00:29:31.000Z",
+                      "uid": "35240-2ae28f03-60e2-4831-83ad-60af16ba9ae4"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T00:29:31.000Z",
+                  "updatedAt": "2026-07-28T00:29:31.000Z",
+                  "uid": "35240-ee49cc40-228c-4dd5-a1ef-a0f183887067"
+                }
+              ],
+              "id": "6366c684-d711-4083-b14d-6cd86b7a257b",
+              "createdAt": "2026-07-28T00:29:31.000Z",
+              "updatedAt": "2026-07-28T00:29:31.000Z",
+              "uid": "35240-6366c684-d711-4083-b14d-6cd86b7a257b"
+            },
+            {
+              "name": "Get Device",
+              "id": "fe2fad3a-5452-44ba-bac6-73d44faa9049",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/devices/:deviceId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "3128a1b8-29db-4ee2-8808-2e9dda6eb415",
+                      "key": "deviceId",
+                      "value": "<string>",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "description": "Returns a single device including lock state, battery level, WiFi signal strength, firmware, and connectivity state."
+              },
+              "response": [
+                {
+                  "id": "1546a64f-e8d1-4dc0-9693-367984d18a19",
+                  "name": "Device returned",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "alle-subscription-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/devices/:deviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "devices",
+                        ":deviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "deviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"deviceId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"model\": \"BE489WB\",\n  \"firmwareVersion\": \"<string>\",\n  \"batteryLevel\": \"<integer>\",\n  \"wifiSignalStrength\": \"<integer>\",\n  \"connectivityState\": \"Offline\",\n  \"lockState\": \"Unknown\",\n  \"timeZone\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T00:29:31.000Z",
+                  "updatedAt": "2026-07-28T00:29:31.000Z",
+                  "uid": "35240-1546a64f-e8d1-4dc0-9693-367984d18a19"
+                },
+                {
+                  "id": "6f553005-4e9d-4296-b304-12fe98076542",
+                  "name": "Access token missing, expired, or insufficient scope.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "alle-subscription-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/devices/:deviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "devices",
+                        ":deviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "deviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T00:29:31.000Z",
+                  "updatedAt": "2026-07-28T00:29:31.000Z",
+                  "uid": "35240-6f553005-4e9d-4296-b304-12fe98076542"
+                },
+                {
+                  "id": "88cf04e6-044f-44db-833e-40c7aabff63f",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "alle-subscription-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/devices/:deviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "devices",
+                        ":deviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "deviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T00:29:31.000Z",
+                  "updatedAt": "2026-07-28T00:29:31.000Z",
+                  "uid": "35240-88cf04e6-044f-44db-833e-40c7aabff63f"
+                }
+              ],
+              "createdAt": "2026-07-28T00:29:31.000Z",
+              "updatedAt": "2026-07-28T00:29:31.000Z",
+              "uid": "35240-fe2fad3a-5452-44ba-bac6-73d44faa9049"
+            },
+            {
+              "name": "Update Device",
+              "id": "f6e6db17-1dd6-4aea-9e83-23c040c82cd7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"autoLockDelaySeconds\": \"<integer>\",\n  \"vacationMode\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/devices/:deviceId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "6d93a8a0-57c3-44eb-bae4-3cc8f3c86da6",
+                      "key": "deviceId",
+                      "value": "<string>",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "description": "Update device configuration (name, default lock timer, vacation mode). Returns 202 ACCEPTED and emits a command that completes asynchronously."
+              },
+              "response": [
+                {
+                  "id": "955d2ed3-383c-46a6-8150-492a990f69b9",
+                  "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "alle-subscription-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"autoLockDelaySeconds\": \"<integer>\",\n  \"vacationMode\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/devices/:deviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "devices",
+                        ":deviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "deviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Accepted",
+                  "code": 202,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"commandId\": \"<string>\",\n  \"deviceId\": \"<string>\",\n  \"type\": \"UpdateAccessCode\",\n  \"status\": \"InProgress\",\n  \"errorMessage\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"completedAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-07-28T00:29:31.000Z",
+                  "updatedAt": "2026-07-28T00:29:31.000Z",
+                  "uid": "35240-955d2ed3-383c-46a6-8150-492a990f69b9"
+                },
+                {
+                  "id": "aa14abc8-5381-4342-b0b9-1650c4f27536",
+                  "name": "Access token missing, expired, or insufficient scope.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "alle-subscription-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"autoLockDelaySeconds\": \"<integer>\",\n  \"vacationMode\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/devices/:deviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "devices",
+                        ":deviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "deviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T00:29:31.000Z",
+                  "updatedAt": "2026-07-28T00:29:31.000Z",
+                  "uid": "35240-aa14abc8-5381-4342-b0b9-1650c4f27536"
+                },
+                {
+                  "id": "17430f94-6aaa-437a-a26f-14c4295be868",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "alle-subscription-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"autoLockDelaySeconds\": \"<integer>\",\n  \"vacationMode\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/devices/:deviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "devices",
+                        ":deviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "deviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T00:29:31.000Z",
+                  "updatedAt": "2026-07-28T00:29:31.000Z",
+                  "uid": "35240-17430f94-6aaa-437a-a26f-14c4295be868"
+                }
+              ],
+              "createdAt": "2026-07-28T00:29:31.000Z",
+              "updatedAt": "2026-07-28T00:29:31.000Z",
+              "uid": "35240-f6e6db17-1dd6-4aea-9e83-23c040c82cd7"
+            }
+          ],
+          "id": "fdae9244-4854-4677-9985-c48eca4048c9",
+          "createdAt": "2026-07-28T00:29:31.000Z",
+          "updatedAt": "2026-07-28T00:29:31.000Z",
+          "uid": "35240-fdae9244-4854-4677-9985-c48eca4048c9"
+        },
+        {
+          "name": "List ENGAGE Devices",
+          "id": "729fbb4c-d633-429b-ab50-7329e9c89af8",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/devices",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "devices"
+              ]
+            },
+            "description": "List ENGAGE hardware enrolled in the integrator's tenant. Surfaces the inputs the Allegion Device Communication SDK uses for commissioning."
+          },
+          "response": [
+            {
+              "id": "d74d8b9c-3810-498f-a2a0-07029e19b46e",
+              "name": "Devices returned",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "alle-subscription-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/devices",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "devices"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"devices\": [\n    {\n      \"deviceId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"model\": \"CTE\",\n      \"firmwareVersion\": \"<string>\",\n      \"siteId\": \"<string>\"\n    },\n    {\n      \"deviceId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"model\": \"LEBMS\",\n      \"firmwareVersion\": \"<string>\",\n      \"siteId\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T00:29:31.000Z",
+              "updatedAt": "2026-07-28T00:29:31.000Z",
+              "uid": "35240-d74d8b9c-3810-498f-a2a0-07029e19b46e"
+            }
+          ],
+          "createdAt": "2026-07-28T00:29:31.000Z",
+          "updatedAt": "2026-07-28T00:29:31.000Z",
+          "uid": "35240-729fbb4c-d633-429b-ab50-7329e9c89af8"
+        }
+      ],
+      "id": "fa994d1c-bd24-42e4-b813-5097bd0cb6c3",
+      "createdAt": "2026-07-28T00:29:31.000Z",
+      "updatedAt": "2026-07-28T00:29:31.000Z",
+      "uid": "35240-fa994d1c-bd24-42e4-b813-5097bd0cb6c3"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "alle-subscription-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.allegion.com/engage"
+    }
+  ]
+}

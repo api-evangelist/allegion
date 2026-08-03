@@ -1,0 +1,177 @@
+{
+  "info": {
+    "_postman_id": "6fd71815-879c-43e3-931f-8254cf70ee7a",
+    "name": "ENGAGE Cloud Credentialing Access Codes Commands API",
+    "description": "REST API hosted on the Allegion Device Management and Mobile Access Cloud\n(Engage Cloud) for managing BLE Mobile Credentials that unlock ENGAGE Gen 2\nSchlage hardware (Control B, NDEB, LEBMS/LEBMD locks; MTKB readers) and\nVon Duprin RU/RM exit devices.\n\nThe Credentialing API performs functions to upload, delete, and get active\nlists of mobile credentials through the API, and is used by an Access\nManagement Platform / Access Control System (ACS) to issue credentials that\nthe Allegion BLE Mobile Access SDK then presents to hardware over Bluetooth.\n\nAuthentication requires an `alle-subscription-key` header plus a Basic Auth\ntoken generated from ENGAGE credentials. Integrators must sign the Allegion\nSecurity Token Agreement before being granted access to the API or to the\nprivate GitHub repositories that contain the iOS and Android SDKs.\n\nGenerated from public documentation at\nhttps://developer.allegion.com/en/products/schlage-mobile-credentials.\nPath naming is inferred from documented capability descriptions.\n\n\nContact Support:\n Name: Allegion Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T00:29:30.000Z",
+    "updatedAt": "2026-07-28T00:29:30.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-6fd71815-879c-43e3-931f-8254cf70ee7a"
+  },
+  "item": [
+    {
+      "name": "devices",
+      "item": [
+        {
+          "name": "{deviceId}",
+          "item": [
+            {
+              "name": "commands",
+              "item": [
+                {
+                  "name": "{commandId}",
+                  "item": [
+                    {
+                      "name": "Get Command Status",
+                      "id": "61e7652a-dfbd-4410-a054-cdab1e50014f",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/devices/:deviceId/commands/:commandId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "devices",
+                            ":deviceId",
+                            "commands",
+                            ":commandId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "7dd5940e-2568-4484-b270-6c3889e64901",
+                              "key": "deviceId",
+                              "value": "<string>",
+                              "description": "(Required) Unique identifier for a Schlage Home device."
+                            },
+                            {
+                              "id": "c090e32c-c8f7-4125-83e8-5b52999047b7",
+                              "key": "commandId",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Retrieve the current status of a previously issued device command. Error messages are populated on failure."
+                      },
+                      "response": [
+                        {
+                          "id": "b05e70fd-b38f-4214-bc93-5d517c300571",
+                          "name": "Command status returned",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "alle-subscription-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/devices/:deviceId/commands/:commandId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "devices",
+                                ":deviceId",
+                                "commands",
+                                ":commandId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deviceId"
+                                },
+                                {
+                                  "key": "commandId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"commandId\": \"<string>\",\n  \"deviceId\": \"<string>\",\n  \"type\": \"Lock\",\n  \"status\": \"InProgress\",\n  \"errorMessage\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"completedAt\": \"<dateTime>\"\n}",
+                          "createdAt": "2026-07-28T00:29:30.000Z",
+                          "updatedAt": "2026-07-28T00:29:30.000Z",
+                          "uid": "35240-b05e70fd-b38f-4214-bc93-5d517c300571"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T00:29:30.000Z",
+                      "updatedAt": "2026-07-28T00:29:30.000Z",
+                      "uid": "35240-61e7652a-dfbd-4410-a054-cdab1e50014f"
+                    }
+                  ],
+                  "id": "43e171b1-33ef-4315-840b-f30e50765358",
+                  "createdAt": "2026-07-28T00:29:30.000Z",
+                  "updatedAt": "2026-07-28T00:29:30.000Z",
+                  "uid": "35240-43e171b1-33ef-4315-840b-f30e50765358"
+                }
+              ],
+              "id": "87d9a198-c10d-4cda-ab6c-b01e574f98ff",
+              "createdAt": "2026-07-28T00:29:30.000Z",
+              "updatedAt": "2026-07-28T00:29:30.000Z",
+              "uid": "35240-87d9a198-c10d-4cda-ab6c-b01e574f98ff"
+            }
+          ],
+          "id": "28d36f25-70d1-474a-aaa0-f9f65c020dd4",
+          "createdAt": "2026-07-28T00:29:30.000Z",
+          "updatedAt": "2026-07-28T00:29:30.000Z",
+          "uid": "35240-28d36f25-70d1-474a-aaa0-f9f65c020dd4"
+        }
+      ],
+      "id": "162f0fe4-7304-4ab6-a426-24f552a391dc",
+      "createdAt": "2026-07-28T00:29:30.000Z",
+      "updatedAt": "2026-07-28T00:29:30.000Z",
+      "uid": "35240-162f0fe4-7304-4ab6-a426-24f552a391dc"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "alle-subscription-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.allegion.com/engage"
+    }
+  ]
+}

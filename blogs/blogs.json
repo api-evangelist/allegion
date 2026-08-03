@@ -6,10 +6,11 @@
       "feed_url": "https://developer.allegion.com/en/products/schlage-home/getting_started_res_access_codes.html",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "none",
+      "error": "parse_failed"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-07-11T11:50:51Z",
+  "fetched": "2026-08-01T15:38:58Z",
   "agent_pulled": "2026-06-27"
 }

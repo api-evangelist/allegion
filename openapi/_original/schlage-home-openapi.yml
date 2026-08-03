@@ -1,0 +1,491 @@
+openapi: 3.0.3
+info:
+  title: Schlage Home API
+  version: '2.0'
+  description: |
+    Schlage Home API V2 - REST + webhook API for the Schlage Home residential
+    smart-lock platform (Schlage Encode, Encode Plus, Encode Lever).
+
+    Designed for business and commercial integrations (partner apps, smart-home
+    automation platforms) that scale across residential deployments. Uses OAuth 2.0
+    Authorization Code flow against account.schlage.com. Device management commands
+    are asynchronous (202 ACCEPTED), with downstream device state surfaced via
+    webhook events.
+
+    Generated from public documentation at https://developer.allegion.com/en/products/schlage-home
+    (Getting Started, Schlage Home API V2, Best Practices, Access Codes, Release Notes,
+    Blog). Path naming and shapes are inferred where docs describe semantics but do
+    not publish a verbatim endpoint catalogue.
+  contact:
+    name: Allegion Developer Support
+    url: https://developersupport.allegion.com/hc/en-us
+  termsOfService: https://developer.allegion.com/en/index.html
+  license:
+    name: Allegion Developer Terms
+    url: https://developer.allegion.com/en/index.html
+servers:
+  - url: https://api.allegion.com/schlage-home
+    description: Production
+  - url: https://api.allegion.com/schlage-home/v2
+    description: Production (v2 path prefix)
+tags:
+  - name: Devices
+    description: Manage and read Schlage Home WiFi-enabled smart locks
+  - name: Access Codes
+    description: Create, schedule, update, and delete numeric access codes per device
+  - name: Commands
+    description: Track the asynchronous status of lock / unlock and configuration commands
+  - name: Webhook Subscriptions
+    description: Subscribe partner endpoints to device, command, access code, and account events
+security:
+  - OAuth2: []
+paths:
+  /devices:
+    get:
+      tags: [Devices]
+      summary: List Devices
+      description: Returns the WiFi-enabled Schlage Home devices the authenticated user account has authorized for this integration.
+      operationId: listDevices
+      responses:
+        '200':
+          description: Devices returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  devices:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /devices/{deviceId}:
+    get:
+      tags: [Devices]
+      summary: Get Device
+      description: Returns a single device including lock state, battery level, WiFi signal strength, firmware, and connectivity state.
+      operationId: getDevice
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+      responses:
+        '200':
+          description: Device returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    put:
+      tags: [Devices]
+      summary: Update Device
+      description: Update device configuration (name, default lock timer, vacation mode). Returns 202 ACCEPTED and emits a command that completes asynchronously.
+      operationId: updateDevice
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceUpdate'
+      responses:
+        '202': { $ref: '#/components/responses/CommandAccepted' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /devices/{deviceId}/lock:
+    post:
+      tags: [Devices]
+      summary: Lock Device
+      description: Issue an asynchronous lock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook.
+      operationId: lockDevice
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+      responses:
+        '202': { $ref: '#/components/responses/CommandAccepted' }
+  /devices/{deviceId}/unlock:
+    post:
+      tags: [Devices]
+      summary: Unlock Device
+      description: Issue an asynchronous unlock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook.
+      operationId: unlockDevice
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+      responses:
+        '202': { $ref: '#/components/responses/CommandAccepted' }
+  /devices/{deviceId}/access-codes:
+    get:
+      tags: [Access Codes]
+      summary: List Access Codes
+      description: List access codes currently stored on the device.
+      operationId: listAccessCodes
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+      responses:
+        '200':
+          description: Access codes returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessCodes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AccessCode'
+    post:
+      tags: [Access Codes]
+      summary: Create Access Code
+      description: Create a numeric access code on the device with an Always, Temporary, or Recurring schedule. Returns 202 ACCEPTED.
+      operationId: createAccessCode
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessCodeCreate'
+      responses:
+        '202': { $ref: '#/components/responses/CommandAccepted' }
+  /devices/{deviceId}/access-codes/{accessCodeId}:
+    get:
+      tags: [Access Codes]
+      summary: Get Access Code
+      operationId: getAccessCode
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+        - $ref: '#/components/parameters/AccessCodeId'
+      responses:
+        '200':
+          description: Access code returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessCode'
+    put:
+      tags: [Access Codes]
+      summary: Update Access Code
+      description: Update an access code name or schedule. The numeric code itself is not changed by name updates.
+      operationId: updateAccessCode
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+        - $ref: '#/components/parameters/AccessCodeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessCodeUpdate'
+      responses:
+        '202': { $ref: '#/components/responses/CommandAccepted' }
+    delete:
+      tags: [Access Codes]
+      summary: Delete Access Code
+      operationId: deleteAccessCode
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+        - $ref: '#/components/parameters/AccessCodeId'
+      responses:
+        '202': { $ref: '#/components/responses/CommandAccepted' }
+  /devices/{deviceId}/commands/{commandId}:
+    get:
+      tags: [Commands]
+      summary: Get Command Status
+      description: Retrieve the current status of a previously issued device command. Error messages are populated on failure.
+      operationId: getCommand
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+        - in: path
+          name: commandId
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Command status returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Command'
+  /webhooks/subscriptions:
+    get:
+      tags: [Webhook Subscriptions]
+      summary: List Webhook Subscriptions
+      operationId: listWebhookSubscriptions
+      responses:
+        '200':
+          description: Subscriptions returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriptions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WebhookSubscription'
+    post:
+      tags: [Webhook Subscriptions]
+      summary: Create Webhook Subscription
+      description: |
+        Register an HTTPS callback URL for one or more event types. On subscription
+        creation an OPTIONS validation request is sent to the URL and must receive
+        a 2xx response within 30 seconds or the subscription is not created.
+      operationId: createWebhookSubscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriptionCreate'
+      responses:
+        '201':
+          description: Subscription created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscription'
+        '400': { $ref: '#/components/responses/BadRequest' }
+  /webhooks/subscriptions/{subscriptionId}:
+    get:
+      tags: [Webhook Subscriptions]
+      summary: Get Webhook Subscription
+      operationId: getWebhookSubscription
+      parameters:
+        - in: path
+          name: subscriptionId
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Subscription returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscription'
+    delete:
+      tags: [Webhook Subscriptions]
+      summary: Delete Webhook Subscription
+      operationId: deleteWebhookSubscription
+      parameters:
+        - in: path
+          name: subscriptionId
+          required: true
+          schema: { type: string }
+      responses:
+        '204':
+          description: Subscription deleted
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://account.schlage.com/OAuth2/authorize
+          tokenUrl: https://account.schlage.com/OAuth2/token
+          scopes:
+            devices.read: Read device state, battery, connectivity, and firmware
+            devices.write: Issue lock, unlock, and configuration commands
+            access_codes.read: Read access codes stored on devices
+            access_codes.write: Create, update, and delete access codes
+            webhooks.manage: Create, list, and delete webhook subscriptions
+  parameters:
+    DeviceId:
+      in: path
+      name: deviceId
+      required: true
+      schema: { type: string }
+      description: Unique identifier for a Schlage Home device.
+    AccessCodeId:
+      in: path
+      name: accessCodeId
+      required: true
+      schema: { type: string }
+      description: Unique identifier for an access code on a specific device.
+  responses:
+    Unauthorized:
+      description: Access token missing, expired, or insufficient scope.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    BadRequest:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    RateLimited:
+      description: Rate limit exceeded.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    CommandAccepted:
+      description: |
+        Asynchronous command accepted. The response includes a commandId that can
+        be polled at GET /devices/{deviceId}/commands/{commandId} or watched for
+        via the corresponding command-status webhook event.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Command' }
+  schemas:
+    Device:
+      type: object
+      properties:
+        deviceId: { type: string }
+        name: { type: string }
+        model:
+          type: string
+          enum: [BE489WB, BE499WB, FE789WB]
+          description: Schlage Encode Deadbolt, Encode Plus, or Encode Lever
+        firmwareVersion: { type: string }
+        batteryLevel:
+          type: integer
+          minimum: 0
+          maximum: 100
+        wifiSignalStrength:
+          type: integer
+          description: WiFi RSSI in dBm (added March 6, 2025).
+        connectivityState:
+          type: string
+          enum: [Online, Offline]
+        lockState:
+          type: string
+          enum: [Locked, Unlocked, Unknown]
+        timeZone: { type: string }
+    DeviceUpdate:
+      type: object
+      properties:
+        name: { type: string }
+        autoLockDelaySeconds: { type: integer }
+        vacationMode: { type: boolean }
+    AccessCode:
+      type: object
+      properties:
+        accessCodeId: { type: string }
+        name:
+          type: string
+          minLength: 1
+          maxLength: 12
+          pattern: '^[a-zA-Z0-9]+$'
+          description: 1-12 character alpha-numeric label. Updating the name does not change the numeric code.
+        code:
+          type: string
+          description: Numeric access code (length is per-device, changed by deleting all codes).
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        accessorType:
+          type: string
+          description: Accessor classification (Owner, Guest, etc.). New accessor types added March 25, 2025.
+    AccessCodeCreate:
+      allOf:
+        - $ref: '#/components/schemas/AccessCode'
+      required: [name, code]
+    AccessCodeUpdate:
+      type: object
+      properties:
+        name: { type: string, maxLength: 12 }
+        schedule: { $ref: '#/components/schemas/Schedule' }
+    Schedule:
+      oneOf:
+        - $ref: '#/components/schemas/AlwaysSchedule'
+        - $ref: '#/components/schemas/TemporarySchedule'
+        - $ref: '#/components/schemas/RecurringSchedule'
+      discriminator:
+        propertyName: type
+        mapping:
+          Always: '#/components/schemas/AlwaysSchedule'
+          Temporary: '#/components/schemas/TemporarySchedule'
+          Recurring: '#/components/schemas/RecurringSchedule'
+    AlwaysSchedule:
+      type: object
+      properties:
+        type: { type: string, enum: [Always] }
+    TemporarySchedule:
+      type: object
+      properties:
+        type: { type: string, enum: [Temporary] }
+        startDateTime:
+          type: string
+          format: date-time
+          description: Includes DST offset since April 14, 2026.
+        endDateTime:
+          type: string
+          format: date-time
+          description: Includes DST offset since April 14, 2026.
+    RecurringSchedule:
+      type: object
+      properties:
+        type: { type: string, enum: [Recurring] }
+        daysOfWeek:
+          type: array
+          items:
+            type: string
+            enum: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+        startTime: { type: string, example: '08:00' }
+        endTime: { type: string, example: '17:00' }
+    Command:
+      type: object
+      properties:
+        commandId: { type: string }
+        deviceId: { type: string }
+        type:
+          type: string
+          enum: [Lock, Unlock, UpdateDevice, CreateAccessCode, UpdateAccessCode, DeleteAccessCode]
+        status:
+          type: string
+          enum: [Pending, InProgress, Completed, Failed]
+        errorMessage:
+          type: string
+          description: Populated when status is Failed (improved March 6, 2025).
+        createdAt: { type: string, format: date-time }
+        completedAt: { type: string, format: date-time }
+    WebhookSubscription:
+      type: object
+      properties:
+        subscriptionId: { type: string }
+        url:
+          type: string
+          format: uri
+          description: HTTPS-only callback URL.
+        eventTypes:
+          type: array
+          items:
+            type: string
+            enum:
+              - DeviceLockStateChanged
+              - DeviceConnectivityStateChanged
+              - DeviceBatteryLevelChanged
+              - DeviceKeypadLockedOut
+              - DeviceAlarmTriggered
+              - AccessCodeCreated
+              - AccessCodeUpdated
+              - AccessCodeDeleted
+              - AccessCodeUsed
+              - InvalidAccessCodeAttempted
+              - AccessCodeSynchronized
+              - CommandStatusUpdated
+              - UserSignedOut
+              - IntegrationManagementUpdated
+        signingPublicKey:
+          type: string
+          description: Public key used to verify webhook signatures.
+        createdAt: { type: string, format: date-time }
+    WebhookSubscriptionCreate:
+      type: object
+      required: [url, eventTypes]
+      properties:
+        url: { type: string, format: uri }
+        eventTypes:
+          type: array
+          items: { type: string }
+    Error:
+      type: object
+      properties:
+        code: { type: string }
+        message: { type: string }
+        details: { type: string }
