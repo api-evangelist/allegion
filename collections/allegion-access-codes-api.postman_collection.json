@@ -1,0 +1,623 @@
+{
+  "item": [
+    {
+      "id": "f2ca07bb-960c-43f0-9a87-f2e13396ed82",
+      "name": "Access Codes",
+      "description": {
+        "content": "Create, schedule, update, and delete numeric access codes per device",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "60237201-a66b-41b3-b704-51668ee3b944",
+          "name": "List Access Codes",
+          "request": {
+            "name": "List Access Codes",
+            "description": {
+              "content": "List access codes currently stored on the device.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "access-codes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "317bee52-a955-4556-8f49-0f3784f0cf7b",
+              "name": "Access codes returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "access-codes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "alle-subscription-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessCodes\": [\n    {\n      \"accessCodeId\": \"string\",\n      \"name\": \"LHt4mckM\",\n      \"code\": \"string\",\n      \"schedule\": {\n        \"type\": \"Always\"\n      },\n      \"accessorType\": \"string\"\n    },\n    {\n      \"accessCodeId\": \"string\",\n      \"name\": \"Z\",\n      \"code\": \"string\",\n      \"schedule\": {\n        \"type\": \"Always\"\n      },\n      \"accessorType\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7395941-77d9-409d-a5f1-68c4ca9d9627",
+          "name": "Create Access Code",
+          "request": {
+            "name": "Create Access Code",
+            "description": {
+              "content": "Create a numeric access code on the device with an Always, Temporary, or Recurring schedule. Returns 202 ACCEPTED.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "access-codes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"code\": \"<string>\",\n  \"accessCodeId\": \"<string>\",\n  \"schedule\": {\n    \"type\": \"<string>\"\n  },\n  \"accessorType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e0f62142-efca-467b-9780-db3c54f455ab",
+              "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "access-codes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "alle-subscription-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"code\": \"<string>\",\n  \"accessCodeId\": \"<string>\",\n  \"schedule\": {\n    \"type\": \"<string>\"\n  },\n  \"accessorType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandId\": \"string\",\n  \"deviceId\": \"string\",\n  \"type\": \"DeleteAccessCode\",\n  \"status\": \"Failed\",\n  \"errorMessage\": \"string\",\n  \"createdAt\": \"2021-11-11T23:14:17.710Z\",\n  \"completedAt\": \"1962-11-18T13:23:22.037Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42d7668e-629b-4182-a05a-0b589ebc83f1",
+          "name": "Get Access Code",
+          "request": {
+            "name": "Get Access Code",
+            "description": {},
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "access-codes",
+                ":accessCodeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accessCodeId",
+                  "description": "(Required) Unique identifier for an access code on a specific device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "43769c30-3f91-4923-a76f-01359197127a",
+              "name": "Access code returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "access-codes",
+                    ":accessCodeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accessCodeId",
+                      "description": "(Required) Unique identifier for an access code on a specific device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "alle-subscription-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessCodeId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"code\": \"<string>\",\n  \"schedule\": {\n    \"type\": \"<string>\"\n  },\n  \"accessorType\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa58644f-926d-4998-acd9-341c1e582a53",
+          "name": "Update Access Code",
+          "request": {
+            "name": "Update Access Code",
+            "description": {
+              "content": "Update an access code name or schedule. The numeric code itself is not changed by name updates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "access-codes",
+                ":accessCodeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accessCodeId",
+                  "description": "(Required) Unique identifier for an access code on a specific device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"schedule\": {\n    \"type\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dd69ddb9-4580-46f4-b7a1-613e1cdf34c8",
+              "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "access-codes",
+                    ":accessCodeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accessCodeId",
+                      "description": "(Required) Unique identifier for an access code on a specific device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "alle-subscription-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"schedule\": {\n    \"type\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandId\": \"string\",\n  \"deviceId\": \"string\",\n  \"type\": \"DeleteAccessCode\",\n  \"status\": \"Failed\",\n  \"errorMessage\": \"string\",\n  \"createdAt\": \"2021-11-11T23:14:17.710Z\",\n  \"completedAt\": \"1962-11-18T13:23:22.037Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1bb7086e-8a48-40f2-8562-3e031db080e8",
+          "name": "Delete Access Code",
+          "request": {
+            "name": "Delete Access Code",
+            "description": {},
+            "url": {
+              "path": [
+                "devices",
+                ":deviceId",
+                "access-codes",
+                ":accessCodeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Unique identifier for a Schlage Home device."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accessCodeId",
+                  "description": "(Required) Unique identifier for an access code on a specific device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6df305be-fb61-440b-97f0-aca75c6d1bc3",
+              "name": "Asynchronous command accepted. The response includes a commandId that can\nbe polled at GET /devices/{deviceId}/commands/{commandId} or watched for\nvia the corresponding command-status webhook event.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices",
+                    ":deviceId",
+                    "access-codes",
+                    ":accessCodeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Unique identifier for a Schlage Home device."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accessCodeId",
+                      "description": "(Required) Unique identifier for an access code on a specific device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "alle-subscription-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandId\": \"string\",\n  \"deviceId\": \"string\",\n  \"type\": \"DeleteAccessCode\",\n  \"status\": \"Failed\",\n  \"errorMessage\": \"string\",\n  \"createdAt\": \"2021-11-11T23:14:17.710Z\",\n  \"completedAt\": \"1962-11-18T13:23:22.037Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.allegion.com/engage",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "alle-subscription-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8441223f-2656-46f8-af64-d11a4bc5ae94",
+    "name": "ENGAGE Cloud Credentialing Access Codes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API hosted on the Allegion Device Management and Mobile Access Cloud\n(Engage Cloud) for managing BLE Mobile Credentials that unlock ENGAGE Gen 2\nSchlage hardware (Control B, NDEB, LEBMS/LEBMD locks; MTKB readers) and\nVon Duprin RU/RM exit devices.\n\nThe Credentialing API performs functions to upload, delete, and get active\nlists of mobile credentials through the API, and is used by an Access\nManagement Platform / Access Control System (ACS) to issue credentials that\nthe Allegion BLE Mobile Access SDK then presents to hardware over Bluetooth.\n\nAuthentication requires an `alle-subscription-key` header plus a Basic Auth\ntoken generated from ENGAGE credentials. Integrators must sign the Allegion\nSecurity Token Agreement before being granted access to the API or to the\nprivate GitHub repositories that contain the iOS and Android SDKs.\n\nGenerated from public documentation at\nhttps://developer.allegion.com/en/products/schlage-mobile-credentials.\nPath naming is inferred from documented capability descriptions.\n\n\nContact Support:\n Name: Allegion Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ENGAGE Cloud Credentialing Access Codes Commands API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "alle-subscription-key",
+      "value": "{{alle-subscription-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Commands",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Command Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/engage/devices/:deviceId/commands/:commandId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              },
+              {
+                "name": "commandId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the current status of a previously issued device command. Error messages are populated on failure."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

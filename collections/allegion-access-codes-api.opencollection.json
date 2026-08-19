@@ -1,0 +1,147 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ENGAGE Cloud Credentialing Access Codes API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "alle-subscription-key",
+      "value": "{{alle-subscription-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Access Codes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Access Codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/engage/devices/:deviceId/access-codes",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ]
+          },
+          "docs": "List access codes currently stored on the device."
+        },
+        {
+          "info": {
+            "name": "Create Access Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.allegion.com/engage/devices/:deviceId/access-codes",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a numeric access code on the device with an Always, Temporary, or Recurring schedule. Returns 202 ACCEPTED."
+        },
+        {
+          "info": {
+            "name": "Get Access Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/engage/devices/:deviceId/access-codes/:accessCodeId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              },
+              {
+                "name": "accessCodeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for an access code on a specific device."
+              }
+            ]
+          },
+          "docs": "Get Access Code"
+        },
+        {
+          "info": {
+            "name": "Update Access Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.allegion.com/engage/devices/:deviceId/access-codes/:accessCodeId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              },
+              {
+                "name": "accessCodeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for an access code on a specific device."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an access code name or schedule. The numeric code itself is not changed by name updates."
+        },
+        {
+          "info": {
+            "name": "Delete Access Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.allegion.com/engage/devices/:deviceId/access-codes/:accessCodeId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              },
+              {
+                "name": "accessCodeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for an access code on a specific device."
+              }
+            ]
+          },
+          "docs": "Delete Access Code"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ENGAGE Cloud Credentialing Access Codes Webhook Subscriptions API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "alle-subscription-key",
+      "value": "{{alle-subscription-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhook Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Webhook Subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/engage/webhooks/subscriptions"
+          },
+          "docs": "List Webhook Subscriptions"
+        },
+        {
+          "info": {
+            "name": "Create Webhook Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.allegion.com/engage/webhooks/subscriptions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register an HTTPS callback URL for one or more event types. On subscription\ncreation an OPTIONS validation request is sent to the URL and must receive\na 2xx response within 30 seconds or the subscription is not created.\n"
+        },
+        {
+          "info": {
+            "name": "Get Webhook Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/engage/webhooks/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Webhook Subscription"
+        },
+        {
+          "info": {
+            "name": "Delete Webhook Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.allegion.com/engage/webhooks/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Webhook Subscription"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

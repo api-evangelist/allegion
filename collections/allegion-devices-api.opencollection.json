@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ENGAGE Cloud Credentialing Access Codes Devices API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "alle-subscription-key",
+      "value": "{{alle-subscription-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Devices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List ENGAGE Devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/engage/devices"
+          },
+          "docs": "List ENGAGE hardware enrolled in the integrator's tenant. Surfaces the inputs the Allegion Device Communication SDK uses for commissioning."
+        },
+        {
+          "info": {
+            "name": "Get Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.allegion.com/engage/devices/:deviceId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ]
+          },
+          "docs": "Returns a single device including lock state, battery level, WiFi signal strength, firmware, and connectivity state."
+        },
+        {
+          "info": {
+            "name": "Update Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.allegion.com/engage/devices/:deviceId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update device configuration (name, default lock timer, vacation mode). Returns 202 ACCEPTED and emits a command that completes asynchronously."
+        },
+        {
+          "info": {
+            "name": "Lock Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.allegion.com/engage/devices/:deviceId/lock",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ]
+          },
+          "docs": "Issue an asynchronous lock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook."
+        },
+        {
+          "info": {
+            "name": "Unlock Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.allegion.com/engage/devices/:deviceId/unlock",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a Schlage Home device."
+              }
+            ]
+          },
+          "docs": "Issue an asynchronous unlock command. Returns 202 ACCEPTED with a command id; final state surfaces via webhook."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
