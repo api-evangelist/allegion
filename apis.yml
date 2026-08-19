@@ -38,7 +38,7 @@ tags:
   - ENGAGE
 kind: contract
 access: 3rd-Party
-specificationVersion: '0.18'
+specificationVersion: '0.23'
 position: Consuming
 created: '2026-05-23'
 modified: '2026-05-23'
