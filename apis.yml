@@ -74,6 +74,8 @@ maintainers:
   - FN: Allegion Developer Support
     url: https://developersupport.allegion.com/hc/en-us
 common:
+  - type: Website
+    url: https://www.allegion.com/
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/allegion/overview
   - type: AgenticAccess
