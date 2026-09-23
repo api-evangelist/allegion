@@ -1,51 +1,24 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: ENGAGE Cloud Credentialing Access Codes API
-  version: '1.0'
-  description: 'REST API hosted on the Allegion Device Management and Mobile Access Cloud
+  title: Schlage Home Access Codes API
+  version: '2.0'
+  description: 'Schlage Home API V2 - REST + webhook API for the Schlage Home residential
 
-    (Engage Cloud) for managing BLE Mobile Credentials that unlock ENGAGE Gen 2
-
-    Schlage hardware (Control B, NDEB, LEBMS/LEBMD locks; MTKB readers) and
-
-    Von Duprin RU/RM exit devices.
-
-
-    The Credentialing API performs functions to upload, delete, and get active
-
-    lists of mobile credentials through the API, and is used by an Access
-
-    Management Platform / Access Control System (ACS) to issue credentials that
-
-    the Allegion BLE Mobile Access SDK then presents to hardware over Bluetooth.
-
-
-    Authentication requires an `alle-subscription-key` header plus a Basic Auth
-
-    token generated from ENGAGE credentials. Integrators must sign the Allegion
-
-    Security Token Agreement before being granted access to the API or to the
-
-    private GitHub repositories that contain the iOS and Android SDKs.
-
-
-    Generated from public documentation at
-
-    https://developer.allegion.com/en/products/schlage-mobile-credentials.
-
-    Path naming is inferred from documented capability descriptions.
-
-    '
+    smart-lock platform (Schlage Encode, Encode Plus, Encode Lever).'
   contact:
     name: Allegion Developer Support
     url: https://developersupport.allegion.com/hc/en-us
-  termsOfService: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+  termsOfService: https://developer.allegion.com/en/index.html
+  license:
+    name: Allegion Developer Terms
+    url: https://developer.allegion.com/en/index.html
 servers:
-- url: https://api.allegion.com/engage
+- url: https://api.allegion.com/schlage-home
   description: Production
+- url: https://api.allegion.com/schlage-home/v2
+  description: Production (v2 path prefix)
 security:
-- SubscriptionKey: []
-  BasicAuth: []
+- OAuth2: []
 tags:
 - name: Access Codes
   description: Create, schedule, update, and delete numeric access codes per device
@@ -135,61 +108,6 @@ paths:
           $ref: '#/components/responses/CommandAccepted'
 components:
   schemas:
-    TemporarySchedule:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Temporary
-        startDateTime:
-          type: string
-          format: date-time
-          description: Includes DST offset since April 14, 2026.
-        endDateTime:
-          type: string
-          format: date-time
-          description: Includes DST offset since April 14, 2026.
-    AccessCode:
-      type: object
-      properties:
-        accessCodeId:
-          type: string
-        name:
-          type: string
-          minLength: 1
-          maxLength: 12
-          pattern: ^[a-zA-Z0-9]+$
-          description: 1-12 character alpha-numeric label. Updating the name does not change the numeric code.
-        code:
-          type: string
-          description: Numeric access code (length is per-device, changed by deleting all codes).
-        schedule:
-          $ref: '#/components/schemas/Schedule'
-        accessorType:
-          type: string
-          description: Accessor classification (Owner, Guest, etc.). New accessor types added March 25, 2025.
-    AccessCodeCreate:
-      allOf:
-      - $ref: '#/components/schemas/AccessCode'
-      required:
-      - name
-      - code
-    AccessCodeUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 12
-        schedule:
-          $ref: '#/components/schemas/Schedule'
-    AlwaysSchedule:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Always
     RecurringSchedule:
       type: object
       properties:
@@ -215,6 +133,13 @@ components:
         endTime:
           type: string
           example: '17:00'
+    AlwaysSchedule:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Always
     Command:
       type: object
       properties:
@@ -258,14 +183,55 @@ components:
           Always: '#/components/schemas/AlwaysSchedule'
           Temporary: '#/components/schemas/TemporarySchedule'
           Recurring: '#/components/schemas/RecurringSchedule'
+    AccessCodeCreate:
+      allOf:
+      - $ref: '#/components/schemas/AccessCode'
+      required:
+      - name
+      - code
+    AccessCodeUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 12
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+    TemporarySchedule:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Temporary
+        startDateTime:
+          type: string
+          format: date-time
+          description: Includes DST offset since April 14, 2026.
+        endDateTime:
+          type: string
+          format: date-time
+          description: Includes DST offset since April 14, 2026.
+    AccessCode:
+      type: object
+      properties:
+        accessCodeId:
+          type: string
+        name:
+          type: string
+          minLength: 1
+          maxLength: 12
+          pattern: ^[a-zA-Z0-9]+$
+          description: 1-12 character alpha-numeric label. Updating the name does not change the numeric code.
+        code:
+          type: string
+          description: Numeric access code (length is per-device, changed by deleting all codes).
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        accessorType:
+          type: string
+          description: Accessor classification (Owner, Guest, etc.). New accessor types added March 25, 2025.
   parameters:
-    AccessCodeId:
-      in: path
-      name: accessCodeId
-      required: true
-      schema:
-        type: string
-      description: Unique identifier for an access code on a specific device.
     DeviceId:
       in: path
       name: deviceId
@@ -273,6 +239,13 @@ components:
       schema:
         type: string
       description: Unique identifier for a Schlage Home device.
+    AccessCodeId:
+      in: path
+      name: accessCodeId
+      required: true
+      schema:
+        type: string
+      description: Unique identifier for an access code on a specific device.
   responses:
     CommandAccepted:
       description: 'Asynchronous command accepted. The response includes a commandId that can
@@ -287,12 +260,15 @@ components:
           schema:
             $ref: '#/components/schemas/Command'
   securitySchemes:
-    SubscriptionKey:
-      type: apiKey
-      in: header
-      name: alle-subscription-key
-      description: Azure API Management subscription key issued via the Allegion Developer Portal.
-    BasicAuth:
-      type: http
-      scheme: basic
-      description: Basic Auth token generated from ENGAGE credentials.
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://account.schlage.com/OAuth2/authorize
+          tokenUrl: https://account.schlage.com/OAuth2/token
+          scopes:
+            devices.read: Read device state, battery, connectivity, and firmware
+            devices.write: Issue lock, unlock, and configuration commands
+            access_codes.read: Read access codes stored on devices
+            access_codes.write: Create, update, and delete access codes
+            webhooks.manage: Create, list, and delete webhook subscriptions

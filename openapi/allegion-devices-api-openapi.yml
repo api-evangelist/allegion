@@ -1,51 +1,18 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: ENGAGE Cloud Credentialing Access Codes Devices API
-  version: '1.0'
-  description: 'REST API hosted on the Allegion Device Management and Mobile Access Cloud
-
-    (Engage Cloud) for managing BLE Mobile Credentials that unlock ENGAGE Gen 2
-
-    Schlage hardware (Control B, NDEB, LEBMS/LEBMD locks; MTKB readers) and
-
-    Von Duprin RU/RM exit devices.
-
-
-    The Credentialing API performs functions to upload, delete, and get active
-
-    lists of mobile credentials through the API, and is used by an Access
-
-    Management Platform / Access Control System (ACS) to issue credentials that
-
-    the Allegion BLE Mobile Access SDK then presents to hardware over Bluetooth.
-
-
-    Authentication requires an `alle-subscription-key` header plus a Basic Auth
-
-    token generated from ENGAGE credentials. Integrators must sign the Allegion
-
-    Security Token Agreement before being granted access to the API or to the
-
-    private GitHub repositories that contain the iOS and Android SDKs.
-
-
-    Generated from public documentation at
-
-    https://developer.allegion.com/en/products/schlage-mobile-credentials.
-
-    Path naming is inferred from documented capability descriptions.
-
-    '
+  title: Allegion Devices API
   contact:
     name: Allegion Developer Support
     url: https://developersupport.allegion.com/hc/en-us
-  termsOfService: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+  version: '1.0'
+  description: 'Operations tagged Devices across 2 of this provider''s published API definitions: engage-credentialing-openapi.yml, schlage-home-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.allegion.com/engage
   description: Production
-security:
-- SubscriptionKey: []
-  BasicAuth: []
+- url: https://api.allegion.com/schlage-home
+  description: Production
+- url: https://api.allegion.com/schlage-home/v2
+  description: Production (v2 path prefix)
 tags:
 - name: Devices
   description: ENGAGE hardware discovery and commissioning (Allegion Device Communication SDK)
@@ -69,6 +36,12 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/EngageDevice'
+      security:
+      - SubscriptionKey: []
+        BasicAuth: []
+    servers:
+    - url: https://api.allegion.com/engage
+      description: Production
   /devices/{deviceId}:
     get:
       tags:
@@ -89,6 +62,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - OAuth2: []
     put:
       tags:
       - Devices
@@ -110,6 +85,13 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - OAuth2: []
+    servers:
+    - url: https://api.allegion.com/schlage-home
+      description: Production
+    - url: https://api.allegion.com/schlage-home/v2
+      description: Production (v2 path prefix)
   /devices/{deviceId}/lock:
     post:
       tags:
@@ -122,6 +104,13 @@ paths:
       responses:
         '202':
           $ref: '#/components/responses/CommandAccepted'
+      security:
+      - OAuth2: []
+    servers:
+    - url: https://api.allegion.com/schlage-home
+      description: Production
+    - url: https://api.allegion.com/schlage-home/v2
+      description: Production (v2 path prefix)
   /devices/{deviceId}/unlock:
     post:
       tags:
@@ -134,6 +123,13 @@ paths:
       responses:
         '202':
           $ref: '#/components/responses/CommandAccepted'
+      security:
+      - OAuth2: []
+    servers:
+    - url: https://api.allegion.com/schlage-home
+      description: Production
+    - url: https://api.allegion.com/schlage-home/v2
+      description: Production (v2 path prefix)
 components:
   schemas:
     EngageDevice:
@@ -160,24 +156,6 @@ components:
           type: string
         siteId:
           type: string
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: string
-    DeviceUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        autoLockDelaySeconds:
-          type: integer
-        vacationMode:
-          type: boolean
     Device:
       type: object
       properties:
@@ -246,6 +224,32 @@ components:
         completedAt:
           type: string
           format: date-time
+    DeviceUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        autoLockDelaySeconds:
+          type: integer
+        vacationMode:
+          type: boolean
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+  parameters:
+    DeviceId:
+      in: path
+      name: deviceId
+      required: true
+      schema:
+        type: string
+      description: Unique identifier for a Schlage Home device.
   responses:
     NotFound:
       description: Resource not found.
@@ -255,6 +259,12 @@ components:
             $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Access token missing, expired, or insufficient scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Rate limit exceeded.
       content:
         application/json:
           schema:
@@ -271,14 +281,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Command'
-  parameters:
-    DeviceId:
-      in: path
-      name: deviceId
-      required: true
-      schema:
-        type: string
-      description: Unique identifier for a Schlage Home device.
   securitySchemes:
     SubscriptionKey:
       type: apiKey
@@ -289,3 +291,18 @@ components:
       type: http
       scheme: basic
       description: Basic Auth token generated from ENGAGE credentials.
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://account.schlage.com/OAuth2/authorize
+          tokenUrl: https://account.schlage.com/OAuth2/token
+          scopes:
+            devices.read: Read device state, battery, connectivity, and firmware
+            devices.write: Issue lock, unlock, and configuration commands
+            access_codes.read: Read access codes stored on devices
+            access_codes.write: Create, update, and delete access codes
+            webhooks.manage: Create, list, and delete webhook subscriptions
+x-refined-from:
+- engage-credentialing-openapi.yml
+- schlage-home-openapi.yml

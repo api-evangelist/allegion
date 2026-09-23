@@ -1,22 +1,31 @@
 {
   "provider": "allegion",
   "sources": [
-    "allegion-access-codes-api-openapi.yml",
-    "allegion-commands-api-openapi.yml",
-    "allegion-devices-api-openapi.yml",
-    "allegion-mobile-credentials-api-openapi.yml",
-    "allegion-webhook-subscriptions-api-openapi.yml"
+    "_original/engage-credentialing-openapi.yml",
+    "_original/schlage-home-openapi.yml"
   ],
   "outputs": [
-    "allegion-access-codes-api-openapi.yml",
-    "allegion-commands-api-openapi.yml",
     "allegion-devices-api-openapi.yml",
     "allegion-mobile-credentials-api-openapi.yml",
+    "allegion-access-codes-api-openapi.yml",
+    "allegion-commands-api-openapi.yml",
     "allegion-webhook-subscriptions-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "engage-credentialing-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "schlage-home-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tag 'Devices' spans 2 source specs (engage-credentialing-openapi.yml, schlage-home-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "allegion-access-codes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "allegion-commands-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "allegion-devices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "allegion-mobile-credentials-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "allegion-webhook-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

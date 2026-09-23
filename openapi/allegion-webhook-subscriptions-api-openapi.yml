@@ -1,51 +1,24 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: ENGAGE Cloud Credentialing Access Codes Webhook Subscriptions API
-  version: '1.0'
-  description: 'REST API hosted on the Allegion Device Management and Mobile Access Cloud
+  title: Schlage Home Webhook Subscriptions API
+  version: '2.0'
+  description: 'Schlage Home API V2 - REST + webhook API for the Schlage Home residential
 
-    (Engage Cloud) for managing BLE Mobile Credentials that unlock ENGAGE Gen 2
-
-    Schlage hardware (Control B, NDEB, LEBMS/LEBMD locks; MTKB readers) and
-
-    Von Duprin RU/RM exit devices.
-
-
-    The Credentialing API performs functions to upload, delete, and get active
-
-    lists of mobile credentials through the API, and is used by an Access
-
-    Management Platform / Access Control System (ACS) to issue credentials that
-
-    the Allegion BLE Mobile Access SDK then presents to hardware over Bluetooth.
-
-
-    Authentication requires an `alle-subscription-key` header plus a Basic Auth
-
-    token generated from ENGAGE credentials. Integrators must sign the Allegion
-
-    Security Token Agreement before being granted access to the API or to the
-
-    private GitHub repositories that contain the iOS and Android SDKs.
-
-
-    Generated from public documentation at
-
-    https://developer.allegion.com/en/products/schlage-mobile-credentials.
-
-    Path naming is inferred from documented capability descriptions.
-
-    '
+    smart-lock platform (Schlage Encode, Encode Plus, Encode Lever).'
   contact:
     name: Allegion Developer Support
     url: https://developersupport.allegion.com/hc/en-us
-  termsOfService: https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html
+  termsOfService: https://developer.allegion.com/en/index.html
+  license:
+    name: Allegion Developer Terms
+    url: https://developer.allegion.com/en/index.html
 servers:
-- url: https://api.allegion.com/engage
+- url: https://api.allegion.com/schlage-home
   description: Production
+- url: https://api.allegion.com/schlage-home/v2
+  description: Production (v2 path prefix)
 security:
-- SubscriptionKey: []
-  BasicAuth: []
+- OAuth2: []
 tags:
 - name: Webhook Subscriptions
   description: Subscribe partner endpoints to device, command, access code, and account events
@@ -76,9 +49,7 @@ paths:
 
         creation an OPTIONS validation request is sent to the URL and must receive
 
-        a 2xx response within 30 seconds or the subscription is not created.
-
-        '
+        a 2xx response within 30 seconds or the subscription is not created.'
       operationId: createWebhookSubscription
       requestBody:
         required: true
@@ -129,13 +100,6 @@ paths:
         '204':
           description: Subscription deleted
 components:
-  responses:
-    BadRequest:
-      description: Request validation failed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -193,13 +157,23 @@ components:
           type: array
           items:
             type: string
+  responses:
+    BadRequest:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
-    SubscriptionKey:
-      type: apiKey
-      in: header
-      name: alle-subscription-key
-      description: Azure API Management subscription key issued via the Allegion Developer Portal.
-    BasicAuth:
-      type: http
-      scheme: basic
-      description: Basic Auth token generated from ENGAGE credentials.
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://account.schlage.com/OAuth2/authorize
+          tokenUrl: https://account.schlage.com/OAuth2/token
+          scopes:
+            devices.read: Read device state, battery, connectivity, and firmware
+            devices.write: Issue lock, unlock, and configuration commands
+            access_codes.read: Read access codes stored on devices
+            access_codes.write: Create, update, and delete access codes
+            webhooks.manage: Create, list, and delete webhook subscriptions
