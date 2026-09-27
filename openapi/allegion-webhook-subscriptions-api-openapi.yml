@@ -101,15 +101,19 @@ paths:
           description: Subscription deleted
 components:
   schemas:
-    Error:
+    WebhookSubscriptionCreate:
       type: object
+      required:
+      - url
+      - eventTypes
       properties:
-        code:
+        url:
           type: string
-        message:
-          type: string
-        details:
-          type: string
+          format: uri
+        eventTypes:
+          type: array
+          items:
+            type: string
     WebhookSubscription:
       type: object
       properties:
@@ -144,19 +148,15 @@ components:
         createdAt:
           type: string
           format: date-time
-    WebhookSubscriptionCreate:
+    Error:
       type: object
-      required:
-      - url
-      - eventTypes
       properties:
-        url:
+        code:
           type: string
-          format: uri
-        eventTypes:
-          type: array
-          items:
-            type: string
+        message:
+          type: string
+        details:
+          type: string
   responses:
     BadRequest:
       description: Request validation failed.

@@ -156,6 +156,47 @@ components:
           type: string
         siteId:
           type: string
+    Command:
+      type: object
+      properties:
+        commandId:
+          type: string
+        deviceId:
+          type: string
+        type:
+          type: string
+          enum:
+          - Lock
+          - Unlock
+          - UpdateDevice
+          - CreateAccessCode
+          - UpdateAccessCode
+          - DeleteAccessCode
+        status:
+          type: string
+          enum:
+          - Pending
+          - InProgress
+          - Completed
+          - Failed
+        errorMessage:
+          type: string
+          description: Populated when status is Failed (improved March 6, 2025).
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
     Device:
       type: object
       properties:
@@ -192,38 +233,6 @@ components:
           - Unknown
         timeZone:
           type: string
-    Command:
-      type: object
-      properties:
-        commandId:
-          type: string
-        deviceId:
-          type: string
-        type:
-          type: string
-          enum:
-          - Lock
-          - Unlock
-          - UpdateDevice
-          - CreateAccessCode
-          - UpdateAccessCode
-          - DeleteAccessCode
-        status:
-          type: string
-          enum:
-          - Pending
-          - InProgress
-          - Completed
-          - Failed
-        errorMessage:
-          type: string
-          description: Populated when status is Failed (improved March 6, 2025).
-        createdAt:
-          type: string
-          format: date-time
-        completedAt:
-          type: string
-          format: date-time
     DeviceUpdate:
       type: object
       properties:
@@ -233,26 +242,9 @@ components:
           type: integer
         vacationMode:
           type: boolean
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: string
-  parameters:
-    DeviceId:
-      in: path
-      name: deviceId
-      required: true
-      schema:
-        type: string
-      description: Unique identifier for a Schlage Home device.
   responses:
-    NotFound:
-      description: Resource not found.
+    RateLimited:
+      description: Rate limit exceeded.
       content:
         application/json:
           schema:
@@ -263,8 +255,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Rate limit exceeded.
+    NotFound:
+      description: Resource not found.
       content:
         application/json:
           schema:
@@ -281,6 +273,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Command'
+  parameters:
+    DeviceId:
+      in: path
+      name: deviceId
+      required: true
+      schema:
+        type: string
+      description: Unique identifier for a Schlage Home device.
   securitySchemes:
     SubscriptionKey:
       type: apiKey
