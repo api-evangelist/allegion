@@ -156,6 +156,24 @@ components:
           type: string
         siteId:
           type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+    DeviceUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        autoLockDelaySeconds:
+          type: integer
+        vacationMode:
+          type: boolean
     Command:
       type: object
       properties:
@@ -188,15 +206,6 @@ components:
         completedAt:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: string
     Device:
       type: object
       properties:
@@ -233,16 +242,19 @@ components:
           - Unknown
         timeZone:
           type: string
-    DeviceUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        autoLockDelaySeconds:
-          type: integer
-        vacationMode:
-          type: boolean
   responses:
+    CommandAccepted:
+      description: 'Asynchronous command accepted. The response includes a commandId that can
+
+        be polled at GET /devices/{deviceId}/commands/{commandId} or watched for
+
+        via the corresponding command-status webhook event.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Command'
     RateLimited:
       description: Rate limit exceeded.
       content:
@@ -261,18 +273,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    CommandAccepted:
-      description: 'Asynchronous command accepted. The response includes a commandId that can
-
-        be polled at GET /devices/{deviceId}/commands/{commandId} or watched for
-
-        via the corresponding command-status webhook event.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Command'
   parameters:
     DeviceId:
       in: path

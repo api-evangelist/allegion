@@ -45,14 +45,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Command'
 components:
-  parameters:
-    DeviceId:
-      in: path
-      name: deviceId
-      required: true
-      schema:
-        type: string
-      description: Unique identifier for a Schlage Home device.
   schemas:
     Command:
       type: object
@@ -86,6 +78,14 @@ components:
         completedAt:
           type: string
           format: date-time
+  parameters:
+    DeviceId:
+      in: path
+      name: deviceId
+      required: true
+      schema:
+        type: string
+      description: Unique identifier for a Schlage Home device.
   securitySchemes:
     OAuth2:
       type: oauth2
