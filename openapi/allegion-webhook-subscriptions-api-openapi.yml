@@ -100,13 +100,6 @@ paths:
         '204':
           description: Subscription deleted
 components:
-  responses:
-    BadRequest:
-      description: Request validation failed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -164,6 +157,13 @@ components:
           type: array
           items:
             type: string
+  responses:
+    BadRequest:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     OAuth2:
       type: oauth2

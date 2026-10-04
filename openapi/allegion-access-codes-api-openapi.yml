@@ -107,75 +107,7 @@ paths:
         '202':
           $ref: '#/components/responses/CommandAccepted'
 components:
-  responses:
-    CommandAccepted:
-      description: 'Asynchronous command accepted. The response includes a commandId that can
-
-        be polled at GET /devices/{deviceId}/commands/{commandId} or watched for
-
-        via the corresponding command-status webhook event.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Command'
   schemas:
-    Schedule:
-      oneOf:
-      - $ref: '#/components/schemas/AlwaysSchedule'
-      - $ref: '#/components/schemas/TemporarySchedule'
-      - $ref: '#/components/schemas/RecurringSchedule'
-      discriminator:
-        propertyName: type
-        mapping:
-          Always: '#/components/schemas/AlwaysSchedule'
-          Temporary: '#/components/schemas/TemporarySchedule'
-          Recurring: '#/components/schemas/RecurringSchedule'
-    AccessCode:
-      type: object
-      properties:
-        accessCodeId:
-          type: string
-        name:
-          type: string
-          minLength: 1
-          maxLength: 12
-          pattern: ^[a-zA-Z0-9]+$
-          description: 1-12 character alpha-numeric label. Updating the name does not change the numeric code.
-        code:
-          type: string
-          description: Numeric access code (length is per-device, changed by deleting all codes).
-        schedule:
-          $ref: '#/components/schemas/Schedule'
-        accessorType:
-          type: string
-          description: Accessor classification (Owner, Guest, etc.). New accessor types added March 25, 2025.
-    RecurringSchedule:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Recurring
-        daysOfWeek:
-          type: array
-          items:
-            type: string
-            enum:
-            - Monday
-            - Tuesday
-            - Wednesday
-            - Thursday
-            - Friday
-            - Saturday
-            - Sunday
-        startTime:
-          type: string
-          example: 08:00
-        endTime:
-          type: string
-          example: '17:00'
     TemporarySchedule:
       type: object
       properties:
@@ -191,19 +123,6 @@ components:
           type: string
           format: date-time
           description: Includes DST offset since April 14, 2026.
-    AccessCodeCreate:
-      allOf:
-      - $ref: '#/components/schemas/AccessCode'
-      required:
-      - name
-      - code
-    AlwaysSchedule:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Always
     Command:
       type: object
       properties:
@@ -236,6 +155,30 @@ components:
         completedAt:
           type: string
           format: date-time
+    AlwaysSchedule:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Always
+    Schedule:
+      oneOf:
+      - $ref: '#/components/schemas/AlwaysSchedule'
+      - $ref: '#/components/schemas/TemporarySchedule'
+      - $ref: '#/components/schemas/RecurringSchedule'
+      discriminator:
+        propertyName: type
+        mapping:
+          Always: '#/components/schemas/AlwaysSchedule'
+          Temporary: '#/components/schemas/TemporarySchedule'
+          Recurring: '#/components/schemas/RecurringSchedule'
+    AccessCodeCreate:
+      allOf:
+      - $ref: '#/components/schemas/AccessCode'
+      required:
+      - name
+      - code
     AccessCodeUpdate:
       type: object
       properties:
@@ -244,14 +187,64 @@ components:
           maxLength: 12
         schedule:
           $ref: '#/components/schemas/Schedule'
+    RecurringSchedule:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Recurring
+        daysOfWeek:
+          type: array
+          items:
+            type: string
+            enum:
+            - Monday
+            - Tuesday
+            - Wednesday
+            - Thursday
+            - Friday
+            - Saturday
+            - Sunday
+        startTime:
+          type: string
+          example: 08:00
+        endTime:
+          type: string
+          example: '17:00'
+    AccessCode:
+      type: object
+      properties:
+        accessCodeId:
+          type: string
+        name:
+          type: string
+          minLength: 1
+          maxLength: 12
+          pattern: ^[a-zA-Z0-9]+$
+          description: 1-12 character alpha-numeric label. Updating the name does not change the numeric code.
+        code:
+          type: string
+          description: Numeric access code (length is per-device, changed by deleting all codes).
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        accessorType:
+          type: string
+          description: Accessor classification (Owner, Guest, etc.). New accessor types added March 25, 2025.
+  responses:
+    CommandAccepted:
+      description: 'Asynchronous command accepted. The response includes a commandId that can
+
+        be polled at GET /devices/{deviceId}/commands/{commandId} or watched for
+
+        via the corresponding command-status webhook event.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Command'
   parameters:
-    AccessCodeId:
-      in: path
-      name: accessCodeId
-      required: true
-      schema:
-        type: string
-      description: Unique identifier for an access code on a specific device.
     DeviceId:
       in: path
       name: deviceId
@@ -259,6 +252,13 @@ components:
       schema:
         type: string
       description: Unique identifier for a Schlage Home device.
+    AccessCodeId:
+      in: path
+      name: accessCodeId
+      required: true
+      schema:
+        type: string
+      description: Unique identifier for an access code on a specific device.
   securitySchemes:
     OAuth2:
       type: oauth2
