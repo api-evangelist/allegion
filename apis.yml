@@ -74,6 +74,9 @@ maintainers:
   - FN: Allegion Developer Support
     url: https://developersupport.allegion.com/hc/en-us
 common:
+  - type: CapabilityMap
+    url: capabilities/allegion-capability-edges.yml
+    name: Allegion Business Capability Map
   - type: Website
     url: https://www.allegion.com/
   - type: PostmanWorkspace

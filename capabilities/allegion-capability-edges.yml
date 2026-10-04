@@ -1,0 +1,24 @@
+slug: allegion
+provider: Allegion
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Webhook Subscriptions
+  spec_file: allegion-webhook-subscriptions-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.8
+  evidence: POST /webhooks/subscriptions createWebhookSubscription Create Webhook Subscription
+  reason: The tag's surface is the lifecycle of outbound webhook subscriptions exposed to platform integrators,
+    which is exactly Webhook & Event Subscription Management under developer platform management.
