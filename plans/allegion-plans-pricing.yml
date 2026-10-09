@@ -1,3 +1,8 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (dated 2026-05-23 by the file itself), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
+generated: '2026-05-23'
 specification: API Commons Plans
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
@@ -133,3 +138,40 @@ plans:
         unit: 1
         price: '199.00'
         currency: USD
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  - one-time
+  units:
+  - object
+  - request
+  plans:
+  - name: Schlage Home API Partner Access
+    access: other
+    model: negotiated
+    model_how: derived
+    units:
+    - object
+    - request
+    periods:
+    - month
+    - per-use
+  - name: ENGAGE Cloud Credentialing API Access
+    access: other
+    model: negotiated
+    model_how: derived
+    units:
+    - object
+    - other
+    periods:
+    - month
+    - per-use
+  - name: Hardware Channel Pricing (Schlage Encode Family)
+    access: other
+    model: one-time
+    model_how: stated
+    units:
+    - object
+    periods: []
