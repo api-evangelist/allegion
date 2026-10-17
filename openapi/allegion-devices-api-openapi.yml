@@ -156,38 +156,6 @@ components:
           type: string
         siteId:
           type: string
-    Command:
-      type: object
-      properties:
-        commandId:
-          type: string
-        deviceId:
-          type: string
-        type:
-          type: string
-          enum:
-          - Lock
-          - Unlock
-          - UpdateDevice
-          - CreateAccessCode
-          - UpdateAccessCode
-          - DeleteAccessCode
-        status:
-          type: string
-          enum:
-          - Pending
-          - InProgress
-          - Completed
-          - Failed
-        errorMessage:
-          type: string
-          description: Populated when status is Failed (improved March 6, 2025).
-        createdAt:
-          type: string
-          format: date-time
-        completedAt:
-          type: string
-          format: date-time
     Error:
       type: object
       properties:
@@ -242,9 +210,41 @@ components:
           type: integer
         vacationMode:
           type: boolean
+    Command:
+      type: object
+      properties:
+        commandId:
+          type: string
+        deviceId:
+          type: string
+        type:
+          type: string
+          enum:
+          - Lock
+          - Unlock
+          - UpdateDevice
+          - CreateAccessCode
+          - UpdateAccessCode
+          - DeleteAccessCode
+        status:
+          type: string
+          enum:
+          - Pending
+          - InProgress
+          - Completed
+          - Failed
+        errorMessage:
+          type: string
+          description: Populated when status is Failed (improved March 6, 2025).
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
   responses:
-    RateLimited:
-      description: Rate limit exceeded.
+    Unauthorized:
+      description: Access token missing, expired, or insufficient scope.
       content:
         application/json:
           schema:
@@ -261,14 +261,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Command'
-    Unauthorized:
-      description: Access token missing, expired, or insufficient scope.
+    NotFound:
+      description: Resource not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
+    RateLimited:
+      description: Rate limit exceeded.
       content:
         application/json:
           schema:
