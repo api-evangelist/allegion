@@ -1,4 +1,4 @@
-# Allegion (allegion)
+# Allegion
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,151 +66,189 @@
 
 Allegion plc is a global security products company with $3.8B in 2024 revenue, 13,000+ employees, and 30+ brands across 120 countries (Schlage, Von Duprin, LCN, CISA, Steelcraft, Interflex, SimonsVoss, Yonomi). The Allegion Developer Portal exposes two documented integration surfaces - the Schlage Home API V2 (residential WiFi smart locks) and the ENGAGE Cloud Credentialing API (commercial BLE mobile credentials), plus iOS and Android Device Communication and BLE Mobile Access SDKs gated behind an Allegion Security Token Agreement.
 
-**APIs.json:** [https://github.com/api-evangelist/allegion](https://github.com/api-evangelist/allegion)
+**Areas:** Access Control · Smart Lock · Smart Home · Mobile Credentials · Bluetooth · BLE · IoT · Security · Webhook · Authentication · Schlage · Von Duprin
 
-## Scope
+## Allegion on APIs.io
 
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for Allegion is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/allegion/](https://apis.io/providers/allegion/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (5)
 
-- Access Control
-- Smart Lock
-- Smart Home
-- Mobile Credentials
-- Bluetooth
-- BLE
-- IoT
-- Security
-- Webhooks
-- OAuth
-- Schlage
-- Von Duprin
-- ENGAGE
+- [Allegion Access Codes API](https://apis.io/apis/allegion/allegion-access-codes-api/) — Create, schedule, update, and delete numeric access codes per device
+- [Allegion Commands API](https://apis.io/apis/allegion/allegion-commands-api/) — Track the asynchronous status of lock / unlock and configuration commands
+- [Allegion Devices API](https://apis.io/apis/allegion/allegion-devices-api/) — ENGAGE hardware discovery and commissioning (Allegion Device Communication SDK)
+- [Allegion Mobile Credentials API](https://apis.io/apis/allegion/allegion-mobile-credentials-api/) — Upload, delete, and list BLE Mobile Credentials for end users
+- [Allegion Webhook Subscriptions API](https://apis.io/apis/allegion/allegion-webhook-subscriptions-api/) — Subscribe partner endpoints to device, command, access code, and account events
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-23
-- **Modified:** 2026-05-23
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Schlage Home API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-REST + webhook API for the Schlage Home residential smart-lock platform. Designed for business and commercial integrations (partner apps, smart-home automation platforms) that scale across residential deployments of WiFi-enabled Schlage Encode, Encode Plus, and Encode Lever devices. Uses OAuth 2.0 Authorization Code flow against account.schlage.com, async 202 ACCEPTED command pattern, and webhook subscriptions for device, command, access code, and account events.
+- [Allegion Agentic Access](https://apis.io/agentic-access/allegion/allegion-agentic-access/)
 
-- **Human URL:** [https://developer.allegion.com/en/products/schlage-home/schlage-home-api.html](https://developer.allegion.com/en/products/schlage-home/schlage-home-api.html)
-- **Base URL:** `https://api.allegion.com/schlage-home`
+#### JSON Schema (4)
 
-#### Tags
+The data models the API reads and writes.
 
-- Smart Lock
-- Residential
-- WiFi
-- OAuth
-- Webhooks
-- Access Codes
-- Devices
-- Schlage Encode
+- [ENGAGE Mobile Credential](https://apis.io/schemas/allegion/engage-credential/)
+- [Schlage Home Access Code](https://apis.io/schemas/allegion/schlage-home-access-code/)
+- [Schlage Home Device](https://apis.io/schemas/allegion/schlage-home-device/)
+- [Schlage Home Webhook Subscription](https://apis.io/schemas/allegion/schlage-home-webhook-subscription/)
 
-#### Properties
+#### JSON Structure (2)
 
-- [Documentation](https://developer.allegion.com/en/products/schlage-home/schlage-home-api.html)
-- [Getting Started](https://developer.allegion.com/en/products/schlage-home/getting-started.html)
-- [Best Practices](https://developer.allegion.com/en/products/schlage-home/best-practices.html)
-- [Quickstart](https://developer.allegion.com/en/products/schlage-home/getting_started_res_access_codes.html)
-- [Blog](https://developer.allegion.com/en/products/schlage-home/schlage-home-api-blog.html)
-- [Authentication](https://developer.allegion.com/en/products/schlage-home/getting-started.html)
-- [Webhooks](https://developer.allegion.com/en/products/schlage-home/best-practices.html)
-- [Release Notes](https://developer.allegion.com/en/release-notes.html)
-- [OpenAPI](openapi/schlage-home-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/schlage-home.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/schlage-home.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Spectral Rules](rules/schlage-home-rules.yml)
-- [JSON Schema](json-schema/schlage-home-device-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/schlage-home-access-code-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/schlage-home-webhook-subscription-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/schlage-home-device-structure.json)
-- [Example](examples/schlage-home-list-devices-example.json)
-- [Example](examples/schlage-home-create-access-code-example.json)
-- [Example](examples/schlage-home-webhook-subscription-example.json)
+Data models expressed in JSON Structure.
 
-### ENGAGE Cloud Credentialing API
+- [Engage Credential Structure](https://apis.io/json-structure/allegion/engage-credential-structure/)
+- [Schlage Home Device Structure](https://apis.io/json-structure/allegion/schlage-home-device-structure/)
 
-REST API on the Allegion Device Management and Mobile Access Cloud (Engage Cloud) for managing BLE Mobile Credentials used to unlock ENGAGE Gen 2 hardware (Schlage Control B, NDEB, LEBMS/LEBMD locks; MTKB readers; Von Duprin RU/RM). Brokers interactions between Access Control Systems (ACS), the Allegion Mobile SDKs, and Schlage hardware. Authentication requires an alle-subscription-key header plus a Basic Auth token derived from ENGAGE credentials; integrators must sign the Allegion Security Token Agreement before receiving SDK and API access.
+#### JSON-LD (1)
 
-- **Human URL:** [https://developer.allegion.com/en/products/schlage-mobile-credentials/credentialing-api.html](https://developer.allegion.com/en/products/schlage-mobile-credentials/credentialing-api.html)
-- **Base URL:** `https://api.allegion.com/engage`
+Linked-data contexts for the provider's vocabulary.
 
-#### Tags
+- [Allegion Context](https://apis.io/jsonld/allegion/allegion-context/)
 
-- Mobile Credentials
-- BLE
-- Bluetooth
-- Access Control
-- Commercial
-- ENGAGE
-- Subscription Key
+#### Vocabulary (1)
 
-#### Properties
+The provider's domain terms, defined.
 
-- [Documentation](https://developer.allegion.com/en/products/schlage-mobile-credentials/credentialing-api.html)
-- [Getting Started](https://developer.allegion.com/en/products/schlage-mobile-credentials/getting-started.html)
-- [Tutorials](https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html)
-- [SDK](https://developer.allegion.com/en/products/schlage-mobile-credentials/mobile-sdk.html)
-- [SDK](https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html)
-- [Authentication](https://developer.allegion.com/en/products/schlage-mobile-credentials/credentialing-api.html)
-- [Terms of Service](https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html)
-- [OpenAPI](openapi/engage-credentialing-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/engage-credentialing.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/engage-credentialing.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Spectral Rules](rules/engage-credentialing-rules.yml)
-- [JSON Schema](json-schema/engage-credential-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/engage-credential-structure.json)
-- [Example](examples/engage-upload-credential-example.json)
-- [Example](examples/engage-list-credentials-example.json)
+- [Allegion Vocabulary](https://apis.io/vocabularies/allegion/allegion-vocabulary/)
 
-## Common Properties
+#### Examples (5)
 
-- [Developer Portal](https://developer.allegion.com)
-- [Portal](https://developerapi.allegion.com)
-- [Sign In](https://developerapi.allegion.com/signin/)
+Example requests and responses.
+
+- [Engage List Credentials Example](https://apis.io/examples/allegion/engage-list-credentials-example/)
+- [Engage Upload Credential Example](https://apis.io/examples/allegion/engage-upload-credential-example/)
+- [Schlage Home Create Access Code Example](https://apis.io/examples/allegion/schlage-home-create-access-code-example/)
+- [Schlage Home List Devices Example](https://apis.io/examples/allegion/schlage-home-list-devices-example/)
+- [Schlage Home Webhook Subscription Example](https://apis.io/examples/allegion/schlage-home-webhook-subscription-example/)
+
+#### Collections (12)
+
+Postman and Open Collection request collections.
+
+- [ENGAGE Cloud Credentialing Access Codes API](https://apis.io/collections/allegion/open-allegion-access-codes-api/)
+- [ENGAGE Cloud Credentialing Access Codes Commands API](https://apis.io/collections/allegion/open-allegion-commands-api/)
+- [ENGAGE Cloud Credentialing Access Codes Devices API](https://apis.io/collections/allegion/open-allegion-devices-api/)
+- [ENGAGE Cloud Credentialing Access Codes Mobile Credentials API](https://apis.io/collections/allegion/open-allegion-mobile-credentials-api/)
+- [ENGAGE Cloud Credentialing Access Codes Webhook Subscriptions API](https://apis.io/collections/allegion/open-allegion-webhook-subscriptions-api/)
+- [ENGAGE Cloud Credentialing API](https://apis.io/collections/allegion/open-engage-credentialing/)
+- [Schlage Home API](https://apis.io/collections/allegion/open-schlage-home/)
+- [ENGAGE Cloud Credentialing Access Codes API](https://apis.io/collections/allegion/postman-allegion-access-codes-api/)
+- [ENGAGE Cloud Credentialing Access Codes Commands API](https://apis.io/collections/allegion/postman-allegion-commands-api/)
+- [ENGAGE Cloud Credentialing Access Codes Devices API](https://apis.io/collections/allegion/postman-allegion-devices-api/)
+- [ENGAGE Cloud Credentialing Access Codes Mobile Credentials API](https://apis.io/collections/allegion/postman-allegion-mobile-credentials-api/)
+- [ENGAGE Cloud Credentialing Access Codes Webhook Subscriptions API](https://apis.io/collections/allegion/postman-allegion-webhook-subscriptions-api/)
+
+#### Governance rules (3)
+
+Spectral rulesets for the provider's contracts.
+
+- [Allegion — jsonschema rules](https://apis.io/rules/allegion/allegion-jsonschema-spectral-rules/)
+- [Allegion — engage credentialing rules](https://apis.io/rules/allegion/engage-credentialing-rules/)
+- [Allegion — schlage home rules](https://apis.io/rules/allegion/schlage-home-rules/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Allegion Authentication](https://apis.io/security/allegion/allegion-authentication/)
+- [Allegion Domain Security](https://apis.io/security/allegion/allegion-domain-security/)
+- [Allegion Trust Center](https://apis.io/security/allegion/allegion-trust-center/)
+- [Allegion Vulnerability Disclosure](https://apis.io/security/allegion/allegion-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Allegion Scopes](https://apis.io/scopes/allegion/allegion-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Allegion Plans Pricing](https://apis.io/plans/allegion/allegion-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Allegion Rate Limits](https://apis.io/rate-limits/allegion/allegion-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Allegion Finops](https://apis.io/finops/allegion/allegion-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.allegion.com/)
 - [Documentation](https://developer.allegion.com/en/documentation.html)
-- [Overview](https://developer.allegion.com/en/index.html)
-- [Release Notes](https://developer.allegion.com/en/release-notes.html)
 - [Support](https://developersupport.allegion.com/hc/en-us)
-- [Authentication](https://developer.allegion.com/en/products/schlage-home/getting-started.html)
-- [GitHub Organization](https://github.com/Allegion)
-- [GitHub Organization](https://github.com/Allegion-Public)
-- [SDK](https://developer.allegion.com/en/products/schlage-mobile-credentials/mobile-sdk.html)
-- [SDK](https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html)
 - [Blog](https://developer.allegion.com/en/products/schlage-home/schlage-home-api-blog.html)
-- [Corporate Site](https://www.allegion.com)
-- [About](https://www.allegion.com/corp/en/about.html)
-- [Consumer Brand](https://www.schlage.com)
-- [Consumer Brand](https://commercial.schlage.com)
-- [Consumer Brand](https://www.vonduprin.com)
-- [Consumer Brand](https://www.lcnclosers.com)
-- [Consumer Brand](https://www.yonomi.com)
-- [Partners](https://www.allegion.com/corp/en/partners.html)
-- [LinkedIn](https://www.linkedin.com/company/allegion)
-- [X (Twitter)](https://x.com/AllegionPlc)
-- [Investors](https://investor.allegion.com)
-- [Terms of Service](https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html)
-- [Privacy Policy](https://www.allegion.com/corp/en/privacy-policy.html)
-- [Features](undefined)
-- [Scale](undefined)
-- [Supported Hardware](undefined)
-- [JSON-LD](json-ld/allegion-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Vocabulary](vocabulary/allegion-vocabulary.yml)
-- [Plans](plans/allegion-plans-pricing.yml)
-- [Rate Limits](rate-limits/allegion-rate-limits.yml)
-- [Fin Ops](finops/allegion-finops.yml)
+- [Terms of service](https://developer.allegion.com/en/products/schlage-mobile-credentials/how-to-integrate-schlage-ble-mobile-credentials-with-an-access-control-system.html)
+- [Privacy policy](https://www.allegion.com/corp/en/privacy-policy.html)
+- [GitHub](https://github.com/Allegion)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
-**FN:** Allegion Developer Support
-**URL:** https://developersupport.allegion.com/hc/en-us
+**Kin Score 52.9** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 62.9 |
+| Contract governance | 27.3 |
+| Operational transparency | 44.7 |
+| Developer ergonomics | 58.3 |
+| Access clarity | 32.9 |
+
+**Agent readiness 29.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | unknown |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 41.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/allegion/](https://apis.io/providers/allegion/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Allegion: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/allegion/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
